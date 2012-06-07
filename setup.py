@@ -121,7 +121,7 @@ def configuration(parent_package='',top_path=None):
                 libraries=["m"], depends=["yt/utilities/lib/fp_utils.pxd"])
     config.add_extension("freetype_writer", 
                 ["yt/utilities/lib/freetype_writer.pyx"],
-                include_dirs = [freetype_inc,os.path.join(freetype_inc, "freetype2")],
+                include_dirs = [os.path.join(freetype_inc, "freetype2")],
                 library_dirs = [freetype_lib], libraries=["freetype"],
                 depends=["yt/utilities/lib/freetype_includes.h"])
     config.add_extension("geometry_utils", 

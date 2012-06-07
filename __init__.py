@@ -28,7 +28,6 @@ from .ContourFinding import *
 from .DepthFirstOctree import *
 from .fortran_reader import *
 from .freetype_writer import *
-from .geometry_utils import *
 from .Interpolators import *
 from .misc_utilities import *
 from .Octree import *
