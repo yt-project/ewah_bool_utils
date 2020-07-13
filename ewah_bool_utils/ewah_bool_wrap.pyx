@@ -1,6 +1,3 @@
-# distutils: language = c++
-# distutils: include_dirs = LIB_DIR_EWAH
-# distutils: extra_compile_args=["-std=c++11"]
 """
 Wrapper for EWAH Bool Array: https://github.com/lemire/EWAHBoolArray
 
@@ -18,7 +15,7 @@ from cython.operator cimport dereference, preincrement
 import numpy as np
 cimport numpy as np
 cimport cython
-from yt.utilities.lib.geometry_utils cimport \
+from geometry_utils cimport \
     morton_neighbors_coarse, morton_neighbors_refined
 
 cdef extern from "<algorithm>" namespace "std" nogil:
@@ -1741,3 +1738,4 @@ cdef class SparseUnorderedRefinedBitmaskSet:
 
     def __dealloc__(self):
         self.entries.clear()
+

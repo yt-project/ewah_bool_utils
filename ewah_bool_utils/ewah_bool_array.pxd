@@ -28,7 +28,7 @@ cdef extern from "<sstream>" namespace "std":
         istream read(char *, size_t)
         bint eof()
 
-cdef extern from "ewah.h":
+cdef extern from "cpp/ewah.h":
     cppclass EWAHBoolArraySetBitForwardIterator[uword]:
         # EWAHBoolArraySetBitForwardIterator()
         EWAHBoolArraySetBitForwardIterator(const EWAHBoolArraySetBitForwardIterator &o)
@@ -71,7 +71,7 @@ cdef extern from "ewah.h":
         EWAHBoolArraySetBitForwardIterator begin()
         EWAHBoolArraySetBitForwardIterator end()
 
-cdef extern from "boolarray.h":
+cdef extern from "cpp/boolarray.h":
     cppclass BoolArray[uword]:
         void setSizeInBits(size_t sizeib)
         void set(size_t pos)
@@ -100,3 +100,4 @@ ctypedef vector[size_t] bitset_array
 ctypedef map[np.uint64_t, ewah_bool_array] ewah_map
 ctypedef stringstream sstream
 ctypedef BoolArray[ewah_word_type] bool_array
+
