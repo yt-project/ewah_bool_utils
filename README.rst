@@ -26,7 +26,8 @@ EWAH Bool Array utils for yt
 Features
 --------
 
-* TODO
+* EWAH Bool Array compression stores integer arrays efficient in memory.
+* Can be used for indexing arrays.
 
 Credits
 -------
