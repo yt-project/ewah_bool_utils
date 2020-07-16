@@ -7,22 +7,20 @@ from setuptools import (
     find_packages,
     Extension
 )
+from setupext import check_for_openmp
 import os
 import numpy as np
 from Cython.Build import cythonize
 
-#TODO: uncomment after adding setupext.py
-#if check_for_openmp() is True:
-#    omp_args = ['-fopenmp']
-#else:
-#    omp_args = None
-omp_args = None
+if check_for_openmp() is True:
+    omp_args = ['-fopenmp']
+else:
+    omp_args = None
 
-#if os.name == "nt":
-#    std_libs = []
-#else:
-#    std_libs = ["m"]
-std_libs = []
+if os.name == "nt":
+    std_libs = []
+else:
+    std_libs = ["m"]
 
 extensions = [
     Extension("ewah_bool_utils.ewah_bool_wrap",
