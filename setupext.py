@@ -21,6 +21,29 @@ int main() {
 }
 """
 
+@contextlib.contextmanager
+def stdchannel_redirected(stdchannel, dest_filename):
+    """
+    A context manager to temporarily redirect stdout or stderr
+    e.g.:
+    with stdchannel_redirected(sys.stderr, os.devnull):
+        if compiler.has_function('clock_gettime', libraries=['rt']):
+            libraries.append('rt')
+    Code adapted from https://stackoverflow.com/a/17752455/1382869
+    """
+
+    try:
+        oldstdchannel = os.dup(stdchannel.fileno())
+        dest_file = open(dest_filename, 'w')
+        os.dup2(dest_file.fileno(), stdchannel.fileno())
+
+        yield
+    finally:
+        if oldstdchannel is not None:
+            os.dup2(oldstdchannel, stdchannel.fileno())
+        if dest_file is not None:
+            dest_file.close()
+
 def check_for_openmp():
     """Returns True if local setup supports OpenMP, False otherwise
     Code adapted from astropy_helpers, originally written by Tom 
