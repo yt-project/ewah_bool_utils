@@ -30,7 +30,7 @@ extensions = [
                             np.get_include()],
               language="c++"),
     Extension("ewah_bool_utils.morton_utils",
-              ["ewah_bool_utils.morton_utils.pyx"],
+              ["ewah_bool_utils/morton_utils.pyx"],
               extra_compile_args=omp_args,
               extra_link_args=omp_args,
               libraries=std_libs,
