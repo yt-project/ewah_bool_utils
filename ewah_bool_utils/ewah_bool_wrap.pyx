@@ -15,7 +15,7 @@ from cython.operator cimport dereference, preincrement
 import numpy as np
 cimport numpy as np
 cimport cython
-from geometry_utils cimport \
+from morton_utils cimport \
     morton_neighbors_coarse, morton_neighbors_refined
 
 cdef extern from "<algorithm>" namespace "std" nogil:

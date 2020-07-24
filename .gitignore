@@ -1,6 +1,6 @@
 # Cython generated files
 ewah_bool_utils/ewah_bool_wrap.cpp
-ewah_bool_utils/geometry_utils.c
+ewah_bool_utils/morton_utils.c
 temp.linux-x86_64-3.6
 
 # Byte-compiled / optimized / DLL files

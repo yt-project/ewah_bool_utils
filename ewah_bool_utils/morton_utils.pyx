@@ -1,10 +1,3 @@
-"""
-Simple integrators for the radiative transfer equation
-
-
-
-"""
-
 import numpy as np
 cimport numpy as np
 cimport cython
