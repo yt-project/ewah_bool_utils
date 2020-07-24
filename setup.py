@@ -70,6 +70,7 @@ setup(
     license="BSD license",
     long_description=readme + '\n\n' + history,
     include_package_data=True,
+    package_data = {'ewah_bool_utils': ['*.pxd']},
     keywords='ewah_bool_utils',
     name='ewah_bool_utils',
     packages=find_packages(include=['ewah_bool_utils', 'ewah_bool_utils.*']),
