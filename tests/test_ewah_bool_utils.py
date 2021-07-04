@@ -8,12 +8,15 @@ import numpy as np
 import os
 import pyximport
 import time
+from pathlib import Path
 
-parent_dir = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
+ROOT = str(Path(__file__).parents[1].resolve())
+
 pyximport.install(pyimport=True,
-                  setup_args={'include_dirs': [np.get_include(),
-                                               os.path.join(parent_dir, 'ewah_bool_utils'),
-                                               os.path.join(parent_dir, 'ewah_bool_utils/cpp')]})
+                  setup_args={'include_dirs': [
+                    np.get_include(),
+                    os.path.join(ROOT, 'ewah_bool_utils'),
+                    os.path.join(ROOT, 'ewah_bool_utils', 'cpp')]})
 
 from .test_ewah_bool_utils_cy import *
 
