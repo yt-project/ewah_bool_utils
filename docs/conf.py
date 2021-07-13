@@ -47,8 +47,8 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'EWAH Bool Utils'
-copyright = "2020, Navaneeth Suresh"
-author = "Navaneeth Suresh"
+copyright = "2020, Matthew Turk, Meagan Lang, Navaneeth Suresh"
+author = "Matthew Turk, Meagan Lang, Navaneeth Suresh"
 
 # The version info for the project you're documenting, acts as replacement
 # for |version| and |release|, also used in various other places throughout

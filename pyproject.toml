@@ -2,7 +2,7 @@
 name = "ewah_bool_utils"
 version = "0.1.0"
 description = "EWAH Bool Array utils for yt"
-authors = ["Navaneeth Suresh"]
+authors = ["Matthew Turk", "Meagan Lang", "Navaneeth Suresh"]
 license = "BSD License"
 
 [tool.poetry.dependencies]
