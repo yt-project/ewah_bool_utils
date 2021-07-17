@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ewah_bool_utils"
-version = "0.1.0"
+version = "0.1.1"
 description = "EWAH Bool Array utils for yt"
 authors = ["Matthew Turk", "Meagan Lang", "Navaneeth Suresh"]
 license = "BSD License"
