@@ -1,12 +1,14 @@
 import numpy as np
-cimport numpy as np
+
 cimport cython
+cimport numpy as np
+
 
 @cython.cdivision(True)
 @cython.boundscheck(False)
 @cython.wraparound(False)
 cdef np.uint32_t morton_neighbors_coarse(np.uint64_t mi1, np.uint64_t max_index1,
-                                         bint periodicity[3], np.uint32_t nn, 
+                                         bint periodicity[3], np.uint32_t nn,
                                          np.uint32_t[:,:] index,
                                          np.uint64_t[:,:] ind1_n,
                                          np.uint64_t[:] neighbors):
@@ -32,7 +34,7 @@ cdef np.uint32_t morton_neighbors_coarse(np.uint64_t mi1, np.uint64_t max_index1
         else:
             for k in range(3):
                 adv = <np.int64_t>((<np.int64_t>ind1[k]) + i)
-                if (adv < 0): 
+                if (adv < 0):
                     if periodicity[k]:
                         while adv < 0:
                             adv += max_index1
@@ -66,9 +68,9 @@ cdef np.uint32_t morton_neighbors_coarse(np.uint64_t mi1, np.uint64_t max_index1
 @cython.cdivision(True)
 @cython.boundscheck(False)
 @cython.wraparound(False)
-cdef np.uint32_t morton_neighbors_refined(np.uint64_t mi1, np.uint64_t mi2, 
+cdef np.uint32_t morton_neighbors_refined(np.uint64_t mi1, np.uint64_t mi2,
                                           np.uint64_t max_index1, np.uint64_t max_index2,
-                                          bint periodicity[3], np.uint32_t nn, 
+                                          bint periodicity[3], np.uint32_t nn,
                                           np.uint32_t[:,:] index,
                                           np.uint64_t[:,:] ind1_n,
                                           np.uint64_t[:,:] ind2_n,

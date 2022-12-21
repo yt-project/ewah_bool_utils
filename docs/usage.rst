@@ -24,7 +24,7 @@ Unset an EWAH array::
 
     vec = ewah_array[0].toArray()
     numpy_array = np.array(vec, 'uint64')
-    
+
 Find the number of collisions between two EWAH arrays::
 
     from ewah_bool_utils.ewah_bool_array cimport ewah_bool_array
@@ -34,4 +34,3 @@ Find the number of collisions between two EWAH arrays::
 
     ewah_array2[0].logicaland(ewah_array1[0], ewah_array_keys[0])
     ncoll = ewah_array_keys[0].numberOfOnes()
-

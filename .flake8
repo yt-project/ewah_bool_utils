@@ -1,0 +1,9 @@
+[flake8]
+ignore =
+    E203,
+    E302,
+    E501,
+extend-select =
+    B902,
+    B904,
+jobs = 8

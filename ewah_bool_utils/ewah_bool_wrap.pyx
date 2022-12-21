@@ -7,16 +7,18 @@ Wrapper for EWAH Bool Array: https://github.com/lemire/EWAHBoolArray
 
 
 import struct
-from libcpp.map cimport map as cmap
-from libcpp.map cimport map
-from libcpp.algorithm cimport sort
-from libc.stdlib cimport malloc, free, qsort
+
 from cython.operator cimport dereference, preincrement
+from libc.stdlib cimport free, malloc
+from libcpp.algorithm cimport sort
+from libcpp.map cimport map, map as cmap
+
 import numpy as np
-cimport numpy as np
+
 cimport cython
-from morton_utils cimport \
-    morton_neighbors_coarse, morton_neighbors_refined
+cimport numpy as np
+from morton_utils cimport morton_neighbors_coarse, morton_neighbors_refined
+
 
 cdef extern from "<algorithm>" namespace "std" nogil:
     Iter unique[Iter](Iter first, Iter last)
@@ -58,7 +60,7 @@ cdef class FileBitmasks:
         cdef ewahmap_it it_map1, it_map2
         if self.nfiles != solf.nfiles:
             return 0
-        for ifile in range(self.nfiles): 
+        for ifile in range(self.nfiles):
             # Keys
             arr1 = (<ewah_bool_array **> self.ewah_keys)[ifile]
             arr2 = (<ewah_bool_array **> solf.ewah_keys)[ifile]
@@ -86,7 +88,7 @@ cdef class FileBitmasks:
                     return 0
             # Match
             return 1
-        
+
     def iseq(self, solf):
         return self._iseq(solf)
 
@@ -302,7 +304,7 @@ cdef class FileBitmasks:
 
     def count_total(self, ifile):
         return self._count_total(ifile)
-    
+
     def count_refined(self, ifile):
         return self._count_refined(ifile)
 
@@ -387,7 +389,7 @@ cdef class FileBitmasks:
                         return 1
                 preincrement(it_map1)
         return 0
-    
+
     cdef void _logicalxor(self, np.uint32_t ifile, BoolArrayCollection solf, BoolArrayCollection out):
         cdef ewah_bool_array *ewah_keys1 = (<ewah_bool_array **> self.ewah_keys)[ifile]
         cdef ewah_bool_array *ewah_refn1 = (<ewah_bool_array **> self.ewah_refn)[ifile]
@@ -463,11 +465,11 @@ cdef class FileBitmasks:
     def logicaland(self, ifile, solf, out):
         return self._logicaland(ifile, solf, out)
 
-    cdef void _select_contaminated(self, np.uint32_t ifile, 
+    cdef void _select_contaminated(self, np.uint32_t ifile,
                                    BoolArrayCollection mask, np.uint8_t[:] out,
                                    np.uint8_t[:] secondary_files,
                                    BoolArrayCollection mask2 = None):
-        # Fill mask at indices owned by this file that are also contaminated by 
+        # Fill mask at indices owned by this file that are also contaminated by
         # other files.
         cdef ewah_bool_array *ewah_refn = (<ewah_bool_array **> self.ewah_refn)[ifile]
         cdef ewah_bool_array ewah_mask
@@ -499,8 +501,8 @@ cdef class FileBitmasks:
             ewah_file = (<ewah_bool_array **> self.ewah_keys)[isfile]
             if ewah_slct.intersects(ewah_file[0]) == 1:
                 secondary_files[isfile] = 1
-        
-    cdef void _select_uncontaminated(self, np.uint32_t ifile, 
+
+    cdef void _select_uncontaminated(self, np.uint32_t ifile,
                                      BoolArrayCollection mask, np.uint8_t[:] out,
                                      BoolArrayCollection mask2 = None):
         # Fill mask at indices that are owned by this file and no other.
@@ -603,7 +605,7 @@ cdef class FileBitmasks:
                 return 0
                 # raise Exception(msg)
         return 1
-        
+
     def check(self):
         return self._check()
 
@@ -641,8 +643,8 @@ cdef class BoolArrayCollection:
         cdef ewahmap *map1
         cdef ewahmap *map2
         cdef ewahmap_it it_map1, it_map2
-        # == 
-        if op == 2: 
+        # ==
+        if op == 2:
             # Keys
             arr1 = <ewah_bool_array *> self.ewah_keys
             arr2 = <ewah_bool_array *> solf.ewah_keys
@@ -761,7 +763,7 @@ cdef class BoolArrayCollection:
 
     def set_refined(self, i1, i2):
         return self._set_refined(i1, i2)
-        
+
     cdef void _set_map(self, np.uint64_t i1, np.uint64_t i2):
         cdef ewah_map *ewah_coll = <ewah_map *> self.ewah_coll
         ewah_coll[0][i1].set(i2)
@@ -782,7 +784,7 @@ cdef class BoolArrayCollection:
         cdef ewah_map *ewah_coll = <ewah_map *> self.ewah_coll
         # Note the 0 here, for dereferencing
         if (ewah_keys[0].get(i1) == 0): return 0
-        if (ewah_refn[0].get(i1) == 0) or (i2 == FLAG): 
+        if (ewah_refn[0].get(i1) == 0) or (i2 == FLAG):
             return 1
         return ewah_coll[0][i1].get(i2)
 
@@ -1065,7 +1067,7 @@ cdef class BoolArrayCollection:
             iset = dereference(iter_set[0])
             out[iset] = 1
             preincrement(iter_set[0])
-        
+
     cdef void _select_uncontaminated(self, BoolArrayCollection mask, np.uint8_t[:] out,
                                      BoolArrayCollection mask2 = None):
         cdef ewah_bool_array *ewah_keys = <ewah_bool_array *> self.ewah_keys
@@ -1091,7 +1093,7 @@ cdef class BoolArrayCollection:
             out[iset] = 1
             preincrement(iter_set[0])
 
-    cdef void _get_ghost_zones(self, int ngz, int order1, int order2, 
+    cdef void _get_ghost_zones(self, int ngz, int order1, int order2,
                                bint periodicity[3], BoolArrayCollection out_ewah,
                                bint coarse_ghosts = 0):
         cdef ewah_bool_array *ewah_keys = <ewah_bool_array *> self.ewah_keys
@@ -1145,10 +1147,10 @@ cdef class BoolArrayCollection:
                 iter_end2 = new ewah_bool_iterator(ewah_coll[0][mi1].end())
                 while iter_set2[0] != iter_end2[0]:
                     mi2 = dereference(iter_set2[0])
-                    ntot = morton_neighbors_refined(mi1, mi2, 
-                                                    max_index1, max_index2, 
-                                                    periodicity, ngz, index, 
-                                                    ind1_n, ind2_n, 
+                    ntot = morton_neighbors_refined(mi1, mi2,
+                                                    max_index1, max_index2,
+                                                    periodicity, ngz, index,
+                                                    ind1_n, ind2_n,
                                                     neighbor_list1,
                                                     neighbor_list2)
                     for i in range(ntot):
@@ -1404,7 +1406,7 @@ cdef class BoolArrayCollectionUncompressed:
         cdef ewah_map *ewah_coll = <ewah_map *> self.ewah_coll
         # Note the 0 here, for dereferencing
         if ewah_keys[i1] == 0: return 0
-        if (ewah_refn[i1] == 0) or (i2 == FLAG): 
+        if (ewah_refn[i1] == 0) or (i2 == FLAG):
             return 1
         return ewah_coll[0][i1].get(i2)
 
@@ -1519,7 +1521,7 @@ cdef class BoolArrayCollectionUncompressed:
                                                                      nrefn,
                                                                      nkeys))
 
-    
+
 
 # Vector version
 cdef class SparseUnorderedBitmaskVector:
@@ -1738,4 +1740,3 @@ cdef class SparseUnorderedRefinedBitmaskSet:
 
     def __dealloc__(self):
         self.entries.clear()
-

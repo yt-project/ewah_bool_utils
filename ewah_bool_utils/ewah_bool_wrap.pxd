@@ -1,10 +1,9 @@
-from libcpp.vector cimport vector
-from libcpp.set cimport set as cset
-from libcpp.pair cimport pair
-from ewah_bool_array cimport \
-    sstream, ewah_map, ewah_bool_array, ewah_bool_iterator
-
 cimport numpy as np
+from ewah_bool_array cimport ewah_bool_array, ewah_bool_iterator, ewah_map, sstream
+from libcpp.pair cimport pair
+from libcpp.set cimport set as cset
+from libcpp.vector cimport vector
+
 ctypedef bint bitarrtype
 ctypedef pair[np.uint64_t, np.uint64_t] ind_pair
 
@@ -42,7 +41,7 @@ cdef class FileBitmasks:
     cdef bint _intersects(self, np.uint32_t ifile, BoolArrayCollection solf)
     cdef void _logicalxor(self, np.uint32_t ifile, BoolArrayCollection solf, BoolArrayCollection out)
     cdef void _logicaland(self, np.uint32_t ifile, BoolArrayCollection solf, BoolArrayCollection out)
-    cdef void _select_contaminated(self, np.uint32_t ifile, BoolArrayCollection mask, np.uint8_t[:] out, 
+    cdef void _select_contaminated(self, np.uint32_t ifile, BoolArrayCollection mask, np.uint8_t[:] out,
                np.uint8_t[:] secondary_files, BoolArrayCollection mask2=*)
     cdef void _select_uncontaminated(self, np.uint32_t ifile, BoolArrayCollection mask, np.uint8_t[:] out,
                BoolArrayCollection mask2=*)
@@ -156,5 +155,3 @@ cdef class SparseUnorderedRefinedBitmaskVector:
     cdef to_array(self)
     cdef void _remove_duplicates(self)
     cdef void _prune(self)
-
-
