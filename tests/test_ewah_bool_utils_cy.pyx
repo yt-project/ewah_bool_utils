@@ -2,11 +2,14 @@
 #cython: language_level=3
 # Cython interface for ewah_bool_utils tests
 
-from libcpp.vector cimport vector
-from ewah_bool_utils.ewah_bool_array cimport ewah_bool_array
 cimport cython
 cimport numpy as np
+from libcpp.vector cimport vector
+
+from ewah_bool_utils.ewah_bool_array cimport ewah_bool_array
+
 import numpy as np
+
 
 cdef np.uint64_t FLAG = ~(<np.uint64_t>0)
 

@@ -3,7 +3,7 @@ name: Build and Test
 on:
   push:
     branches:
-      - main
+    - main
   pull_request:
   workflow_dispatch:
 
@@ -14,7 +14,7 @@ defaults:
 jobs:
 
   build:
-    name: "${{ matrix.tests-type }} tests: py${{ matrix.python-version }} on ${{ matrix.os }}"
+    name: '${{ matrix.tests-type }} tests: py${{ matrix.python-version }} on ${{ matrix.os }}'
     strategy:
       # run all tests even if e.g. image tests fail early
       fail-fast: false
@@ -22,10 +22,10 @@ jobs:
         os:
           #- macos-latest
           #- windows-latest
-          - ubuntu-latest
+        - ubuntu-latest
         python-version:
-          - '3.8'
-          - '3.9'
+        - '3.8'
+        - '3.9'
 
     runs-on: ${{ matrix.os }}
 

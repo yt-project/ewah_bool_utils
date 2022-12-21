@@ -6,8 +6,8 @@ Helper functions to generate Morton indices
 
 """
 
-cimport numpy as np
 cimport cython
+cimport numpy as np
 
 DEF XSHIFT=2
 DEF YSHIFT=1
@@ -24,7 +24,7 @@ cdef inline np.uint64_t compact_64bits_by2(np.uint64_t x):
     x=(x|(x>>2))&(<np.uint64_t>0x00786070C0E181C3)
     x=(x|(x>>4))&(<np.uint64_t>0x0007E007C00F801F)
     x=(x|(x>>10))&(<np.uint64_t>0x000001FFC00003FF)
-    x=(x|(x>>20))&(<np.uint64_t>0x00000000001FFFFF) 
+    x=(x|(x>>20))&(<np.uint64_t>0x00000000001FFFFF)
     return x
 
 #-----------------------------------------------------------------------------
@@ -68,7 +68,7 @@ cdef inline void decode_morton_64bit(np.uint64_t mi, np.uint64_t *p):
     p[2] = compact_64bits_by2(mi>>ZSHIFT)
 
 cdef np.uint32_t morton_neighbors_coarse(np.uint64_t mi1, np.uint64_t max_index1,
-                                         bint periodicity[3], np.uint32_t nn, 
+                                         bint periodicity[3], np.uint32_t nn,
                                          np.uint32_t[:,:] index,
                                          np.uint64_t[:,:] ind1_n,
                                          np.uint64_t[:] neighbors)
@@ -81,4 +81,3 @@ cdef np.uint32_t morton_neighbors_refined(np.uint64_t mi1, np.uint64_t mi2,
                                           np.uint64_t[:,:] ind2_n,
                                           np.uint64_t[:] neighbors1,
                                           np.uint64_t[:] neighbors2)
-
