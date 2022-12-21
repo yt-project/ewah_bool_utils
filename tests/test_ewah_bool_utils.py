@@ -1,29 +1,10 @@
-# Concept taken from
-# https://pytestguide.readthedocs.io/en/latest/pytestGuide/#testing-cython-code
-
 """Tests for `ewah_bool_utils` package."""
 
-import os
 import time
-from pathlib import Path
 
 import numpy as np
-import pyximport
 
-ROOT = str(Path(__file__).parents[1].resolve())
-
-pyximport.install(
-    pyimport=True,
-    setup_args={
-        "include_dirs": [
-            np.get_include(),
-            os.path.join(ROOT, "ewah_bool_utils"),
-            os.path.join(ROOT, "ewah_bool_utils", "cpp"),
-        ]
-    },
-)
-
-from .test_ewah_bool_utils_cy import (  # noqa: E402
+from ewah_bool_utils._testing import (
     ewah_set_and_unset,
     find_ewah_collisions,
     make_and_select_from_ewah_index,
