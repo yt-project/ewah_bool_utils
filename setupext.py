@@ -4,7 +4,7 @@ import os
 import subprocess
 import sys
 import tempfile
-from distutils import log
+import warnings
 from distutils.ccompiler import new_compiler
 from distutils.errors import CompileError, LinkError
 from distutils.sysconfig import customize_compiler
@@ -83,7 +83,9 @@ def check_for_openmp():
         # Compile, link, and run test program
         with stdchannel_redirected(sys.stderr, os.devnull):
             ccompiler.compile(
-                ["test_openmp.c"], output_dir="objects", extra_postargs=[compile_flag]
+                ["test_openmp.c"],
+                output_dir="objects",
+                extra_postargs=[compile_flag],
             )
             ccompiler.link_executable(
                 glob.glob(os.path.join("objects", "*")),
@@ -101,13 +103,13 @@ def check_for_openmp():
             if len(output) == nthreads:
                 using_openmp = True
             else:
-                log.warn(
+                warnings.warn(
                     "Unexpected number of lines from output of test "
                     "OpenMP program (output was {})".format(output)
                 )
                 using_openmp = False
         else:
-            log.warn(
+            warnings.warn(
                 "Unexpected output from test OpenMP "
                 "program (output was {})".format(output)
             )
@@ -119,9 +121,9 @@ def check_for_openmp():
         os.chdir(start_dir)
 
     if using_openmp:
-        log.warn("Using OpenMP to compile parallel extensions")
+        warnings.warn("Using OpenMP to compile parallel extensions")
     else:
-        log.warn(
+        warnings.warn(
             "Unable to compile OpenMP test program so Cython\n"
             "extensions will be compiled without parallel support"
         )

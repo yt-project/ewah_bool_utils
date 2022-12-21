@@ -2,7 +2,7 @@ import os
 
 import numpy as np
 from Cython.Build import cythonize
-from setuptools import Extension, find_packages, setup
+from setuptools import Extension, setup
 
 from setupext import check_for_openmp
 

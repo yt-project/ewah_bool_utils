@@ -1,6 +1,5 @@
-#!/usr/bin/env python
-#
-# Concept taken from https://pytestguide.readthedocs.io/en/latest/pytestGuide/#testing-cython-code
+# Concept taken from
+# https://pytestguide.readthedocs.io/en/latest/pytestGuide/#testing-cython-code
 
 """Tests for `ewah_bool_utils` package."""
 
@@ -24,7 +23,11 @@ pyximport.install(
     },
 )
 
-from .test_ewah_bool_utils_cy import *
+from .test_ewah_bool_utils_cy import (  # noqa: E402
+    ewah_set_and_unset,
+    find_ewah_collisions,
+    make_and_select_from_ewah_index,
+)
 
 np.random.seed(0)
 

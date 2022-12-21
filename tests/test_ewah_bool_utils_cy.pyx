@@ -1,4 +1,3 @@
-#!python
 #cython: language_level=3
 # Cython interface for ewah_bool_utils tests
 
