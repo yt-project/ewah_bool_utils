@@ -5,7 +5,7 @@ cimport cython
 cimport numpy as np
 from libcpp.vector cimport vector
 
-from ewah_bool_utils.ewah_bool_array cimport ewah_bool_array
+from .ewah_bool_array cimport ewah_bool_array
 
 import numpy as np
 

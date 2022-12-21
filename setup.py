@@ -31,6 +31,13 @@ extensions = [
         libraries=std_libs,
         include_dirs=[np.get_include()],
     ),
+    Extension(
+        "ewah_bool_utils._testing",
+        ["ewah_bool_utils/_testing.pyx"],
+        include_dirs=["ewah_bool_utils", "ewah_bool_utils/cpp", np.get_include()],
+        extra_compile_args=["-O3", "-march=native"],
+        language="c++",
+    ),
 ]
 
 
