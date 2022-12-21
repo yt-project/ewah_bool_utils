@@ -11,7 +11,7 @@ import struct
 from cython.operator cimport dereference, preincrement
 from libc.stdlib cimport free, malloc
 from libcpp.algorithm cimport sort
-from libcpp.map cimport map, map as cmap
+from libcpp.map cimport map as cmap
 
 import numpy as np
 
@@ -150,17 +150,17 @@ cdef class FileBitmasks:
         cdef np.int32_t ifile
         cdef ewah_bool_array iarr, arr_two, arr_swap
         cdef ewah_bool_array* coll_refn
-        cdef map[np.uint64_t, ewah_bool_array] map_keys, map_refn
-        cdef map[np.uint64_t, ewah_bool_array]* coll_coll
-        cdef map[np.uint64_t, ewah_bool_array]* map_bitmask
+        cdef cmap[np.uint64_t, ewah_bool_array] map_keys, map_refn
+        cdef cmap[np.uint64_t, ewah_bool_array]* coll_coll
+        cdef cmap[np.uint64_t, ewah_bool_array]* map_bitmask
         coll_refn = <ewah_bool_array*> coll.ewah_refn
         if coll_refn[0].numberOfOnes() == 0:
             if verbose == 1:
                 print("{: 10d}/{: 10d} collisions at refined refinement. ({: 10.5f}%)".format(0,0,0))
             return (0,0)
-        coll_coll = <map[np.uint64_t, ewah_bool_array]*> coll.ewah_coll
+        coll_coll = <cmap[np.uint64_t, ewah_bool_array]*> coll.ewah_coll
         for ifile in range(self.nfiles):
-            map_bitmask = (<map[np.uint64_t, ewah_bool_array]**> self.ewah_coll)[ifile]
+            map_bitmask = (<cmap[np.uint64_t, ewah_bool_array]**> self.ewah_coll)[ifile]
             for it_mi1 in map_bitmask[0]:
                 mi1 = it_mi1.first
                 iarr = it_mi1.second
@@ -541,7 +541,7 @@ cdef class FileBitmasks:
         cdef ewahmap_it it_map
         cdef np.uint64_t nrefn, mi1
         cdef ewah_bool_array mi1_ewah
-        # Write mi1 ewah & refinment ewah
+        # Write mi1 ewah & refinement ewah
         ewah_keys[0].write(ss,1)
         ewah_refn[0].write(ss,1)
         # Number of refined bool arrays
@@ -567,9 +567,11 @@ cdef class FileBitmasks:
         cdef np.uint64_t nrefn, mi1
         nrefn = mi1 = 0
         # Write string to string stream
+        if len(s) == 0: return 1
         ss.write(s, len(s))
-        # Read keys and refinment arrays
+        # Read keys and refinement arrays
         ewah_keys[0].read(ss,1)
+        if ss.eof(): return 1
         ewah_refn[0].read(ss,1)
         # Read and check number of refined cells
         ss.read(<char *> (&nrefn), sizeof(nrefn))
@@ -578,6 +580,7 @@ cdef class FileBitmasks:
         # Loop over refined cells
         for _ in range(nrefn):
             ss.read(<char *> (&mi1), sizeof(mi1))
+            if ss.eof(): return 1
             ewah_coll[0][mi1].read(ss,1)
             # or...
             #mi1_ewah.read(ss,1)
@@ -1190,7 +1193,7 @@ cdef class BoolArrayCollection:
         cdef ewahmap_it it_map
         cdef np.uint64_t nrefn, mi1
         cdef ewah_bool_array mi1_ewah
-        # Write mi1 ewah & refinment ewah
+        # Write mi1 ewah & refinement ewah
         ewah_keys[0].write(ss,1)
         ewah_refn[0].write(ss,1)
         # Number of refined bool arrays
@@ -1219,17 +1222,34 @@ cdef class BoolArrayCollection:
         cdef np.uint64_t nrefn, mi1
         nrefn = mi1 = 0
         # Write string to string stream
+        if len(s) == 0: return 1
         ss.write(s, len(s))
-        # Read keys and refinment arrays
+        # Read keys and refinement arrays
+        if ss.eof(): return 1
         ewah_keys[0].read(ss,1)
+        if ss.eof(): return 1
         ewah_refn[0].read(ss,1)
         # Read and check number of refined cells
+        if ss.eof(): return 1
         ss.read(<char *> (&nrefn), sizeof(nrefn))
         if nrefn != ewah_refn[0].numberOfOnes():
             raise Exception("Error in read. File indicates {} refinements, but bool array has {}.".format(nrefn,ewah_refn[0].numberOfOnes()))
         # Loop over refined cells
         for _ in range(nrefn):
             ss.read(<char *> (&mi1), sizeof(mi1))
+            if ss.eof():
+                # A brief note about why we do this!
+                # In previous versions of the EWAH code, which were more
+                # susceptible to issues with differences in sizes of size_t
+                # etc, the ewah_coll.read would use instance variables as
+                # destinations; these were initialized to zero.  In recent
+                # versions, it uses (uninitialized) temporary variables.  We
+                # were passing in streams that were already at EOF - so the
+                # uninitialized memory would not be written to, and it would
+                # retain the previous values, which would invariably be really
+                # really big!  So we do a check for EOF here to make sure we're
+                # not up to no good.
+                break
             ewah_coll[0][mi1].read(ss,1)
             # or...
             #mi1_ewah.read(ss,1)
