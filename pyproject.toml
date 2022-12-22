@@ -9,7 +9,7 @@ requires = [
 
 [project]
 name = "ewah_bool_utils"
-version = "1.0.0"
+version = "1.0.1"
 description = "EWAH Bool Array utils for yt"
 authors = [
   { name = "Matthew Turk" },

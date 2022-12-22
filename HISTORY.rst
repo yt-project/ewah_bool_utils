@@ -2,11 +2,17 @@
 History
 =======
 
+1.0.1 (2022-12-22)
+------------------
+
+* BUG: Fix build on i386 by @neutrinoceros in https://github.com/yt-project/ewah_bool_utils/pull/15
+* BUG: fix downstream linking by @neutrinoceros in  https://github.com/yt-project/ewah_bool_utils/pull/16
+* ENH: add a get_include() function to facilitate downstream integration by @neutrinoceros in https://github.com/yt-project/ewah_bool_utils/pull/18
+
+
 1.0.0 (2022-12-22)
 ------------------
 
-* MAINT: improvements in packaging quality by @neutrinoceros in https://github.com/yt-project/ewah_bool_utils/pull/1
-* Package using poetry by @themousepotato in https://github.com/yt-project/ewah_bool_utils/pull/2
 * Update EWAH from upstream lemire/EWAHBoolArray by @themousepotato in https://github.com/yt-project/ewah_bool_utils/pull/3
 * TST: revive CI by @neutrinoceros in https://github.com/yt-project/ewah_bool_utils/pull/6
 * MNT: bootstrap pre-commit by @neutrinoceros in https://github.com/yt-project/ewah_bool_utils/pull/5
