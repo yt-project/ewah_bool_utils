@@ -18,7 +18,9 @@ authors = [
 ]
 requires-python =">=3.8"
 dependencies = [
-  "numpy>=1.17.5",
+  # match the absolute oldest version of numpy with *any*
+  # level of support for our minimal Python requirement
+  "numpy>=1.17.3",
 ]
 classifiers = [
     "Intended Audience :: Developers",
