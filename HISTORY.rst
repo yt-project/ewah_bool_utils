@@ -2,6 +2,12 @@
 History
 =======
 
+1.0.2 (2022-12-22)
+------------------
+
+* BLD: lower runtime requirement for numpy from 1.17.5 to 1.17.3 by @neutrinoceros in  https://github.com/yt-project/ewah_bool_utils/pull/21
+
+
 1.0.1 (2022-12-22)
 ------------------
 
