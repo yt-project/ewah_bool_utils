@@ -9,16 +9,28 @@ requires = [
 
 [project]
 name = "ewah_bool_utils"
-version = "0.1.1"
+version = "1.0.0"
 description = "EWAH Bool Array utils for yt"
 authors = [
   { name = "Matthew Turk" },
-  { name = "Meagan Lang"},
-  { name = "Navaneeth Suresh"},
+  { name = "Meagan Lang" },
+  { name = "Navaneeth Suresh" },
 ]
 requires-python =">=3.8"
 dependencies = [
   "numpy>=1.17.5",
+]
+classifiers = [
+    "Intended Audience :: Developers",
+    "Development Status :: 5 - Production/Stable",
+    "License :: OSI Approved :: BSD License",
+    "Programming Language :: Cython",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
 ]
 
 [project.license]
