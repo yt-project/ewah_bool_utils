@@ -21,6 +21,7 @@ extensions = [
         "ewah_bool_utils.ewah_bool_wrap",
         ["ewah_bool_utils/ewah_bool_wrap.pyx"],
         include_dirs=["ewah_bool_utils", "ewah_bool_utils/cpp", np.get_include()],
+        define_macros=[("NPY_NO_DEPRECATED_API", "NPY_1_7_API_VERSION")],
         language="c++",
     ),
     Extension(
@@ -30,22 +31,17 @@ extensions = [
         extra_link_args=omp_args,
         libraries=std_libs,
         include_dirs=[np.get_include()],
+        define_macros=[("NPY_NO_DEPRECATED_API", "NPY_1_7_API_VERSION")],
     ),
     Extension(
         "ewah_bool_utils._testing",
         ["ewah_bool_utils/_testing.pyx"],
         include_dirs=["ewah_bool_utils", "ewah_bool_utils/cpp", np.get_include()],
+        define_macros=[("NPY_NO_DEPRECATED_API", "NPY_1_7_API_VERSION")],
         extra_compile_args=["-O3"],
         language="c++",
     ),
 ]
 
 
-setup(
-    ext_modules=cythonize(
-        extensions,
-        compiler_directives={
-            "language_level": 3  # this option can be removed when Cython >= 3.0 is required
-        },
-    ),
-)
+setup(ext_modules=cythonize(extensions))
