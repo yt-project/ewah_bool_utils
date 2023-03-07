@@ -17,7 +17,7 @@ import numpy as np
 
 cimport cython
 cimport numpy as np
-from morton_utils cimport morton_neighbors_coarse, morton_neighbors_refined
+from ewah_bool_utils.morton_utils cimport morton_neighbors_coarse, morton_neighbors_refined
 
 
 cdef extern from "<algorithm>" namespace "std" nogil:
