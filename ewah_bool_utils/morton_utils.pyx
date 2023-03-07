@@ -101,7 +101,7 @@ cdef np.uint32_t morton_neighbors_refined(np.uint64_t mi1, np.uint64_t mi2,
         else:
             for k in range(3):
                 adv = <np.int64_t>(ind2[k] + i)
-                maj = adv / (<np.int64_t>max_index2)
+                maj = adv // (<np.int64_t>max_index2)
                 rem = adv % (<np.int64_t>max_index2)
                 if adv < 0:
                     adv1 = <np.int64_t>(ind1[k] + (maj-1))
