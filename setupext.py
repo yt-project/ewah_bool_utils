@@ -105,13 +105,15 @@ def check_for_openmp():
             else:
                 warnings.warn(
                     "Unexpected number of lines from output of test "
-                    "OpenMP program (output was {})".format(output)
+                    "OpenMP program (output was {})".format(output),
+                    stacklevel=1,
                 )
                 using_openmp = False
         else:
             warnings.warn(
                 "Unexpected output from test OpenMP "
-                "program (output was {})".format(output)
+                "program (output was {})".format(output),
+                stacklevel=1,
             )
             using_openmp = False
 
@@ -121,11 +123,12 @@ def check_for_openmp():
         os.chdir(start_dir)
 
     if using_openmp:
-        warnings.warn("Using OpenMP to compile parallel extensions")
+        warnings.warn("Using OpenMP to compile parallel extensions", stacklevel=1)
     else:
         warnings.warn(
             "Unable to compile OpenMP test program so Cython\n"
-            "extensions will be compiled without parallel support"
+            "extensions will be compiled without parallel support",
+            stacklevel=1,
         )
 
     return using_openmp
