@@ -23,29 +23,29 @@ repos:
   - id: check-executables-have-shebangs
 
 - repo: https://github.com/psf/black
-  rev: 23.1.0
+  rev: 23.3.0
   hooks:
   - id: black
 
 - repo: https://github.com/charliermarsh/ruff-pre-commit
-  rev: v0.0.239
+  rev: v0.0.260
   hooks:
   - id: ruff
     args: [--fix]
 
 - repo: https://github.com/pre-commit/pygrep-hooks
-  rev: v1.9.0
+  rev: v1.10.0
   hooks:
   - id: rst-backticks
 
 - repo: https://github.com/macisamuele/language-formatters-pre-commit-hooks
-  rev: v2.5.0
+  rev: v2.8.0
   hooks:
   - id: pretty-format-yaml
     args: [--autofix]
 
 - repo: https://github.com/MarcoGorelli/cython-lint
-  rev: v0.10.1
+  rev: v0.15.0
   hooks:
   - id: cython-lint
     args: [--no-pycodestyle]
