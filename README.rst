@@ -6,15 +6,6 @@ EWAH Bool Utils
 .. image:: https://img.shields.io/pypi/v/ewah_bool_utils.svg
         :target: https://pypi.python.org/pypi/ewah_bool_utils
 
-.. image:: https://img.shields.io/travis/themousepotato/ewah_bool_utils.svg
-        :target: https://travis-ci.com/themousepotato/ewah_bool_utils
-
-.. image:: https://readthedocs.org/projects/ewah-bool-utils/badge/?version=latest
-        :target: https://ewah-bool-utils.readthedocs.io/en/latest/?badge=latest
-        :alt: Documentation Status
-
-
-
 
 EWAH Bool Array utils for yt
 
