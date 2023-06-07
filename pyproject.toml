@@ -51,6 +51,10 @@ license-files = [
     "LICENSE",
 ]
 
+[tool.setuptools.packages.find]
+where = ["src"]
+namespaces = false
+
 [tool.black]
 line-length = 88
 target-version = ['py38']
@@ -87,3 +91,4 @@ select = [
 
 [tool.ruff.isort]
 combine-as-imports = true
+known-first-party = ["ewah_bool_utils"]

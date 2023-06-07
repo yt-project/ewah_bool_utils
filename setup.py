@@ -16,16 +16,17 @@ if os.name == "nt":
 else:
     std_libs = ["m"]
 
+include_dirs = ["src/ewah_bool_utils", "src/ewah_bool_utils/cpp", np.get_include()]
 extensions = [
     Extension(
         "ewah_bool_utils.ewah_bool_wrap",
-        ["ewah_bool_utils/ewah_bool_wrap.pyx"],
-        include_dirs=["ewah_bool_utils", "ewah_bool_utils/cpp", np.get_include()],
+        ["src/ewah_bool_utils/ewah_bool_wrap.pyx"],
+        include_dirs=include_dirs,
         language="c++",
     ),
     Extension(
         "ewah_bool_utils.morton_utils",
-        ["ewah_bool_utils/morton_utils.pyx"],
+        ["src/ewah_bool_utils/morton_utils.pyx"],
         extra_compile_args=omp_args,
         extra_link_args=omp_args,
         libraries=std_libs,
@@ -33,8 +34,8 @@ extensions = [
     ),
     Extension(
         "ewah_bool_utils._testing",
-        ["ewah_bool_utils/_testing.pyx"],
-        include_dirs=["ewah_bool_utils", "ewah_bool_utils/cpp", np.get_include()],
+        ["src/ewah_bool_utils/_testing.pyx"],
+        include_dirs=include_dirs,
         extra_compile_args=["-O3"],
         language="c++",
     ),
