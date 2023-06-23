@@ -9,9 +9,7 @@ EWAH Bool Utils
 
 EWAH Bool Array utils for yt
 
-
-* Free software: BSD license
-* Documentation: https://ewah-bool-utils.readthedocs.io.
+Free software: BSD license
 
 
 Features
