@@ -28,7 +28,7 @@ repos:
   - id: black
 
 - repo: https://github.com/charliermarsh/ruff-pre-commit
-  rev: v0.0.260
+  rev: v0.0.275
   hooks:
   - id: ruff
     args: [--fix]
@@ -39,7 +39,7 @@ repos:
   - id: rst-backticks
 
 - repo: https://github.com/macisamuele/language-formatters-pre-commit-hooks
-  rev: v2.8.0
+  rev: v2.9.0
   hooks:
   - id: pretty-format-yaml
     args: [--autofix]
