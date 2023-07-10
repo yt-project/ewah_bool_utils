@@ -20,7 +20,8 @@ requires-python =">=3.8"
 dependencies = [
   # match the absolute oldest version of numpy with *any*
   # level of support for our minimal Python requirement
-  "numpy>=1.17.3",
+  # https://github.com/scipy/oldest-supported-numpy/issues/76#issuecomment-1628865694
+  "numpy>=1.17.3,<2.0",
 ]
 classifiers = [
     "Intended Audience :: Developers",
