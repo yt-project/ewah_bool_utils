@@ -1,10 +1,10 @@
 [build-system]
 requires = [
     "setuptools>=61.2",
-    "Cython>=0.29.22,<3.0",
+
+    # see https://github.com/yt-project/ewah_bool_utils/issues/52
+    "Cython>=3.0, <3.1",
     "oldest-supported-numpy",
-    # see https://github.com/numpy/numpy/pull/18389
-    "wheel>=0.36.2",
 ]
 
 [project]
