@@ -4,7 +4,10 @@ requires = [
 
     # see https://github.com/yt-project/ewah_bool_utils/issues/52
     "Cython>=3.0, <3.1",
-    "oldest-supported-numpy",
+
+    # TODO: simplify numpy requirement after numpy 1.26.0 final is released
+    "oldest-supported-numpy ; python_version < '3.12.0rc1'",
+    "numpy>=1.26.0b1 ; python_version >= '3.12.0rc1'",
 ]
 
 [project]
