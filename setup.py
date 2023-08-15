@@ -16,16 +16,20 @@ if os.name == "nt":
 else:
     std_libs = ["m"]
 
+define_macros = [("NPY_NO_DEPRECATED_API", "NPY_1_7_API_VERSION")]
+
 extensions = [
     Extension(
         "ewah_bool_utils.ewah_bool_wrap",
         ["ewah_bool_utils/ewah_bool_wrap.pyx"],
+        define_macros=define_macros,
         include_dirs=["ewah_bool_utils", "ewah_bool_utils/cpp", np.get_include()],
         language="c++",
     ),
     Extension(
         "ewah_bool_utils.morton_utils",
         ["ewah_bool_utils/morton_utils.pyx"],
+        define_macros=define_macros,
         extra_compile_args=omp_args,
         extra_link_args=omp_args,
         libraries=std_libs,
@@ -35,6 +39,7 @@ extensions = [
         "ewah_bool_utils._testing",
         ["ewah_bool_utils/_testing.pyx"],
         include_dirs=["ewah_bool_utils", "ewah_bool_utils/cpp", np.get_include()],
+        define_macros=define_macros,
         extra_compile_args=["-O3"],
         language="c++",
     ),
@@ -44,8 +49,6 @@ extensions = [
 setup(
     ext_modules=cythonize(
         extensions,
-        compiler_directives={
-            "language_level": 3  # this option can be removed when Cython >= 3.0 is required
-        },
+        compiler_directives={"language_level": 3},
     ),
 )
