@@ -27,7 +27,7 @@ dependencies = [
   # https://github.com/scipy/oldest-supported-numpy/issues/76#issuecomment-1628865694
 
   # after Python 3.8 is dropped, keep in sync with NPY_TARGET_VERSION (setup.py)
-  "numpy>=1.17.3,<2.0",
+  "numpy>=1.17.3",
 ]
 classifiers = [
     "Intended Audience :: Developers",
