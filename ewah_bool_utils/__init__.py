@@ -1,7 +1,7 @@
 """Top-level package for EWAH Bool Utils."""
 
 
-from .ewah_bool_wrap import *
+from ewah_bool_utils.ewah_bool_wrap import *
 
 
 def get_include():
