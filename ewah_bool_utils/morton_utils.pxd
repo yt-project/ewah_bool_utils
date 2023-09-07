@@ -9,9 +9,13 @@ Helper functions to generate Morton indices
 cimport cython
 cimport numpy as np
 
-DEF XSHIFT=2
-DEF YSHIFT=1
-DEF ZSHIFT=0
+cdef extern from *:
+    """
+    const int XSHIFT=2;
+    const int YSHIFT=1;
+    const int ZSHIFT=0;
+    """
+    cdef int XSHIFT, YSHIFT, ZSHIFT
 
 @cython.cdivision(True)
 @cython.boundscheck(False)
