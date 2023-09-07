@@ -7,20 +7,17 @@ include README.rst
 include *.py
 include *.txt
 
-include ewah_bool_utils ewah_bool_utils/cpp/*.h
-include ewah_bool_utils ewah_bool_utils/cpp/LICENSE
-include ewah_bool_utils ewah_bool_utils/cpp/README
+include ewah_bool_utils/cpp/*.h
+include ewah_bool_utils/cpp/LICENSE
+include ewah_bool_utils/cpp/README
 
 recursive-include ewah_bool_utils *.pxd
 recursive-include ewah_bool_utils *.pyx
 recursive-include tests *
 
-exclude .flake8 .pre-commit-config.yaml
 exclude ewah_bool_utils/_testing.cpp
 exclude ewah_bool_utils/ewah_bool_wrap.cpp
 exclude ewah_bool_utils/morton_utils.c
-recursive-exclude * __pycache__
-recursive-exclude * .c
 recursive-exclude * *.py[co]
 
-recursive-include docs *.rst conf.py Makefile make.bat *.jpg *.png *.gif
+recursive-include docs *.rst conf.py Makefile make.bat
