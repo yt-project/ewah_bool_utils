@@ -1,4 +1,5 @@
 import os
+from distutils.ccompiler import get_default_compiler
 
 import numpy as np
 from Cython.Build import cythonize
@@ -10,6 +11,8 @@ if check_for_openmp():
     omp_args = ["-fopenmp"]
 else:
     omp_args = None
+
+cpp11_args = ["-std=c++11" if get_default_compiler() != "msvc" else "/std:c++11"]
 
 if os.name == "nt":
     std_libs = []
@@ -29,6 +32,7 @@ extensions = [
         define_macros=define_macros,
         include_dirs=["ewah_bool_utils", "ewah_bool_utils/cpp", np.get_include()],
         language="c++",
+        extra_compile_args=cpp11_args,
     ),
     Extension(
         "ewah_bool_utils.morton_utils",

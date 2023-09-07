@@ -89,7 +89,9 @@ cpdef np.uint64_t[:] ewah_set_and_unset(long[:] arr):
     return np_arr
 
 cpdef int find_ewah_collisions(long[:] arr1, long[:] arr2):
-    cdef ewah_bool_array *ewah_arr1, *ewah_arr2, *ewah_arr_keys
+    cdef ewah_bool_array *ewah_arr1
+    cdef ewah_bool_array *ewah_arr2
+    cdef ewah_bool_array *ewah_arr_keys
     cdef int ncoll
 
     ewah_arr1 = new ewah_bool_array()
