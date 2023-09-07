@@ -6,9 +6,8 @@ requires = [
     "Cython>=3.0, <3.1",
 
     # TODO: simplify numpy requirement after numpy 1.26.0 final is released
-    "oldest-supported-numpy ; python_version < '3.9'",
-    "numpy>=1.25, <2.0 ; python_version >= '3.9' and python_version < '3.12.0rc1'",
-    "numpy>=1.26.0b1, <2.0; python_version >= '3.12.0rc1'",
+    "numpy>=1.25, <2.0 ; python_version < '3.12'",
+    "numpy>=1.26.0b1, <2.0; python_version >= '3.12'",
 ]
 
 [project]
@@ -20,14 +19,12 @@ authors = [
   { name = "Meagan Lang" },
   { name = "Navaneeth Suresh" },
 ]
-requires-python =">=3.8"
+requires-python =">=3.9"
 dependencies = [
   # match the absolute oldest version of numpy with *any*
   # level of support for our minimal Python requirement
   # https://github.com/scipy/oldest-supported-numpy/issues/76#issuecomment-1628865694
-
-  # after Python 3.8 is dropped, keep in sync with NPY_TARGET_VERSION (setup.py)
-  "numpy>=1.17.3",
+  "numpy>=1.19.3",
 ]
 classifiers = [
     "Intended Audience :: Developers",
@@ -35,8 +32,6 @@ classifiers = [
     "License :: OSI Approved :: BSD License",
     "Programming Language :: Cython",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
@@ -61,7 +56,6 @@ license-files = [
 
 [tool.black]
 line-length = 88
-target-version = ['py38']
 include = '\.pyi?$'
 exclude = '''
 /(
@@ -79,7 +73,6 @@ exclude = '''
 '''
 
 [tool.ruff]
-target-version = "py38" # https://github.com/charliermarsh/ruff/issues/2039
 exclude = ["*__init__.py"]
 ignore = ["E501"]
 select = [
