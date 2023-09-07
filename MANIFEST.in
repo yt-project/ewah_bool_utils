@@ -18,6 +18,8 @@ recursive-include tests *
 exclude ewah_bool_utils/_testing.cpp
 exclude ewah_bool_utils/ewah_bool_wrap.cpp
 exclude ewah_bool_utils/morton_utils.c
-recursive-exclude * *.py[co]
 
 recursive-include docs *.rst conf.py Makefile make.bat
+
+exclude .pre-commit-config.yaml
+recursive-exclude */__pycache__ *
