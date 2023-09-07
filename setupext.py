@@ -50,11 +50,6 @@ def check_for_openmp():
     Code adapted from astropy_helpers, originally written by Tom
     Robitaille and Curtis McCully.
     """
-
-    # See https://bugs.python.org/issue25150
-    if sys.version_info[:3] == (3, 5, 0):
-        return False
-
     # Create a temporary directory
     ccompiler = new_compiler()
     customize_compiler(ccompiler)
