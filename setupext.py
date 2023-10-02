@@ -100,14 +100,13 @@ def check_for_openmp():
             else:
                 warnings.warn(
                     "Unexpected number of lines from output of test "
-                    "OpenMP program (output was {})".format(output),
+                    f"OpenMP program (output was {output})",
                     stacklevel=1,
                 )
                 using_openmp = False
         else:
             warnings.warn(
-                "Unexpected output from test OpenMP "
-                "program (output was {})".format(output),
+                f"Unexpected output from test OpenMP program (output was {output})",
                 stacklevel=1,
             )
             using_openmp = False
