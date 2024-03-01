@@ -14,7 +14,6 @@ defaults:
 jobs:
 
   build:
-    name: '${{ matrix.tests-type }} tests: py${{ matrix.python-version }} on ${{ matrix.os }}'
     strategy:
       # run all tests even if e.g. image tests fail early
       fail-fast: false
