@@ -13,7 +13,7 @@ include ewah_bool_utils/cpp/README
 
 recursive-include ewah_bool_utils *.pxd
 recursive-include ewah_bool_utils *.pyx
-recursive-include tests *
+recursive-include ewah_bool_utils/tests *
 
 exclude ewah_bool_utils/_testing.cpp
 exclude ewah_bool_utils/ewah_bool_wrap.cpp
