@@ -2,12 +2,12 @@
 requires = [
     "setuptools>=61.2",
     "Cython>=3.0",
-    "numpy>=1.25, <2.0",
+    "numpy>=2.0.0b1",
 ]
 
 [project]
 name = "ewah_bool_utils"
-version = "1.1.0"
+version = "1.1.1b1"
 description = "EWAH Bool Array utils for yt"
 authors = [
   { name = "Matthew Turk" },
@@ -18,8 +18,7 @@ requires-python =">=3.9"
 dependencies = [
   # match the absolute oldest version of numpy with *any*
   # level of support for our minimal Python requirement
-  # https://github.com/scipy/oldest-supported-numpy/issues/76#issuecomment-1628865694
-  "numpy>=1.19.3",
+  "numpy>=1.19.3, <3",
 ]
 classifiers = [
     "Intended Audience :: Developers",
