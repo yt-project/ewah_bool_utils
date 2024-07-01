@@ -15,6 +15,10 @@ ctypedef fused dtype_t:
     np.float32_t
     np.float64_t
 
+ctypedef fused int_t:
+    np.int32_t
+    np.int64_t
+
 
 cdef class Index:
     cdef void* ewah_array
@@ -59,7 +63,7 @@ cdef class Index:
     @cython.wraparound(False)
     @cython.cdivision(True)
     @cython.initializedcheck(False)
-    def set_from(self, long[:] ids):
+    def set_from(self, int_t[:] ids):
         cdef ewah_bool_array *ewah_array = <ewah_bool_array *> self.ewah_array
         cdef np.uint64_t i
         cdef np.uint64_t last = 0
@@ -73,7 +77,7 @@ cdef class Index:
             ids.size, ewah_array[0].sizeInBytes()))
 
 
-cpdef np.uint64_t[:] ewah_set_and_unset(long[:] arr):
+cpdef np.uint64_t[:] ewah_set_and_unset(int_t[:] arr):
     cdef ewah_bool_array *ewah_arr
     cdef vector[size_t] vec
 
@@ -88,7 +92,7 @@ cpdef np.uint64_t[:] ewah_set_and_unset(long[:] arr):
 
     return np_arr
 
-cpdef int find_ewah_collisions(long[:] arr1, long[:] arr2):
+cpdef int find_ewah_collisions(int_t[:] arr1, int_t[:] arr2):
     cdef ewah_bool_array *ewah_arr1
     cdef ewah_bool_array *ewah_arr2
     cdef ewah_bool_array *ewah_arr_keys
@@ -112,7 +116,7 @@ cpdef int find_ewah_collisions(long[:] arr1, long[:] arr2):
     return ncoll
 
 cpdef dtype_t[:] make_and_select_from_ewah_index(dtype_t[:] arr,
-      long[:] np_idx):
+      int_t[:] np_idx):
       cdef Index idx = Index()
 
       idx.set_from(np_idx)
