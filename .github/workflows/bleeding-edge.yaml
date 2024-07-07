@@ -29,7 +29,7 @@ jobs:
     - name: Set up Python (newest testable version)
       uses: actions/setup-python@v5
       with:
-        python-version: 3.12-dev
+        python-version: 3.13-dev
     - uses: yezz123/setup-uv@v4
       with:
         uv-version: 0.2.18
@@ -38,7 +38,7 @@ jobs:
     - name: Install dependencies
       run: |
         uv pip install --upgrade setuptools wheel
-        uv pip install --pre --only-binary ":all:" numpy \
+        uv pip install --pre --no-build numpy \
          --extra-index-url https://pypi.anaconda.org/scientific-python-nightly-wheels/simple
         uv pip install --pre Cython
 
