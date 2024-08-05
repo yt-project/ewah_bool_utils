@@ -90,8 +90,6 @@ jobs:
     - name: Build
       shell: bash
       run: uv pip install --no-build-isolation .
-    - name: Init submodules
-      uses: snickerbockers/submodules-init@v4
     - name: run check-manifest
       run: check-manifest -vvv
 
