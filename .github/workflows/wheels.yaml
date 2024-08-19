@@ -35,7 +35,7 @@ jobs:
         uv-venv: .venv
 
     - name: Build wheels for CPython
-      uses: pypa/cibuildwheel@v2.19.2
+      uses: pypa/cibuildwheel@v2.20.0
       with:
         output-dir: dist
       env:
