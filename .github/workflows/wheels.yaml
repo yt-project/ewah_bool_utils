@@ -18,8 +18,8 @@ jobs:
     strategy:
       matrix:
         os:
-        - ubuntu-20.04
-        - windows-2019
+        - ubuntu-latest
+        - windows-latest
         - macos-13    # x86_64
         - macos-14    # arm64
 
@@ -31,11 +31,11 @@ jobs:
 
     - uses: yezz123/setup-uv@v4
       with:
-        uv-version: 0.2.18
+        uv-version: 0.2.33
         uv-venv: .venv
 
     - name: Build wheels for CPython
-      uses: pypa/cibuildwheel@v2.19.2
+      uses: pypa/cibuildwheel@v2.20.0
       with:
         output-dir: dist
       env:
@@ -76,15 +76,15 @@ jobs:
         python-version: 3.x
     - uses: yezz123/setup-uv@v4
       with:
-        uv-version: 0.2.18
+        uv-version: 0.2.33
         uv-venv: .venv
     - name: install check-manifest
       run: uv pip install check-manifest
     - name: Install build time dependencies
       shell: bash
       run: |
-        uv pip install "Cython>=3.0,<3.1"
-        uv pip install oldest-supported-numpy
+        uv pip install "Cython>=3.0"
+        uv pip install numpy>=2.0.0
         uv pip install --upgrade wheel
         uv pip install --upgrade setuptools
     - name: Build

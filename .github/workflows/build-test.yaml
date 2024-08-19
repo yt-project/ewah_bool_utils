@@ -50,7 +50,7 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - uses: yezz123/setup-uv@v4
       with:
-        uv-version: 0.2.18
+        uv-version: 0.2.33
         uv-venv: .venv
 
     - run: uv pip install --requirement test_requirements.txt
