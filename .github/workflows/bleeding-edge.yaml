@@ -30,13 +30,14 @@ jobs:
       uses: actions/setup-python@v5
       with:
         python-version: 3.13-dev
-    - uses: yezz123/setup-uv@v4
+    - uses: astral-sh/setup-uv@v2
       with:
-        uv-version: 0.2.33
-        uv-venv: .venv
+        enable-cache: true
+        github-token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Install dependencies
       run: |
+        uv venv
         uv pip install --upgrade setuptools wheel
         uv pip install --pre --no-build numpy \
          --extra-index-url https://pypi.anaconda.org/scientific-python-nightly-wheels/simple
@@ -48,13 +49,14 @@ jobs:
       # to use the dev version of numpy at build time.
       run: |
         uv pip install -e . --no-build-isolation
-        uv pip install --upgrade --pre pytest
+        uv pip install --pre pytest
 
     - run: uv pip list
 
     - name: Run Tests
       run: |
-        pytest -vvv --color=yes
+        source .venv/bin/activate
+        pytest --color=yes -ra
 
   create-issue:
     if: ${{ failure() && github.event_name == 'schedule' }}

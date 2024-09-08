@@ -29,10 +29,10 @@ jobs:
     - name: Checkout repo
       uses: actions/checkout@v4
 
-    - uses: yezz123/setup-uv@v4
+    - uses: astral-sh/setup-uv@v2
       with:
-        uv-version: 0.2.33
-        uv-venv: .venv
+        enable-cache: true
+        github-token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Build wheels for CPython
       uses: pypa/cibuildwheel@v2.20.0
@@ -54,10 +54,9 @@ jobs:
     steps:
     - name: Checkout repo
       uses: actions/checkout@v4
-
+    - uses: astral-sh/setup-uv@v2
     - name: Build sdist
-      run: pipx run build --sdist
-
+      run: uv build --sdist
     - name: Upload sdist
       uses: actions/upload-artifact@v4
       with:
@@ -70,28 +69,19 @@ jobs:
     steps:
     - name: Checkout repo
       uses: actions/checkout@v4
-    - name: Set up Python
-      uses: actions/setup-python@v5
+    - uses: astral-sh/setup-uv@v2
       with:
-        python-version: 3.x
-    - uses: yezz123/setup-uv@v4
-      with:
-        uv-version: 0.2.33
-        uv-venv: .venv
-    - name: install check-manifest
-      run: uv pip install check-manifest
+        enable-cache: true
+        github-token: ${{ secrets.GITHUB_TOKEN }}
     - name: Install build time dependencies
-      shell: bash
       run: |
-        uv pip install "Cython>=3.0"
-        uv pip install numpy>=2.0.0
-        uv pip install --upgrade wheel
-        uv pip install --upgrade setuptools
+        uv venv
+        uv pip install 'Cython>=3.0' 'numpy>=2.0.0' setuptools wheel check-manifest
     - name: Build
-      shell: bash
       run: uv pip install --no-build-isolation .
-    - name: run check-manifest
-      run: check-manifest -vvv
+    - run: |
+        source .venv/bin/activate
+        check-manifest
 
   deploy:
     name: Publish to PyPI
