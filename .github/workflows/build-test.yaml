@@ -37,32 +37,31 @@ jobs:
           python-version: '3.12'
         - os: ubuntu-20.04
           python-version: '3.9'
-          deps: minimal
+          install-args: --resolution=lowest-direct
 
     runs-on: ${{ matrix.os }}
 
     steps:
     - name: Checkout repo
       uses: actions/checkout@v4
-    - name: Set up Python
-      uses: actions/setup-python@v5
+    - uses: astral-sh/setup-uv@v2
       with:
-        python-version: ${{ matrix.python-version }}
-    - uses: yezz123/setup-uv@v4
-      with:
-        uv-version: 0.2.33
-        uv-venv: .venv
-
-    - run: uv pip install --requirement test_requirements.txt
-
-    - if: matrix.deps == 'minimal'
-      run: |
-        uv pip compile pyproject.toml --resolution=lowest-direct | uv pip install -r -
+        enable-cache: true
+        github-token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Build
-      run: uv pip install --editable "."
-
+      run: |
+        uv venv --python ${{ matrix.python-version }}
+        uv pip install --editable "." ${{ matrix.install-args }}
+    - run: uv pip install --requirement test_requirements.txt
     - run: uv pip list
-
-    - name: Run Tests
-      run: pytest --color=yes
+    - name: Run test suite (UNIX)
+      if: matrix.os != 'windows-latest'
+      run: |
+        source .venv/bin/activate
+        pytest --color yes -ra
+    - name: Run test suite (Windows)
+      if: matrix.os == 'windows-latest'
+      run: |
+        source .venv/Scripts/activate
+        pytest --color yes -ra
