@@ -29,12 +29,12 @@ jobs:
     - name: Checkout repo
       uses: actions/checkout@v4
 
-    - uses: astral-sh/setup-uv@v2
+    - uses: astral-sh/setup-uv@v3
       with:
         enable-cache: true
 
     - name: Build wheels for CPython
-      uses: pypa/cibuildwheel@v2.20.0
+      uses: pypa/cibuildwheel@v2.21.1
       with:
         output-dir: dist
       env:
@@ -53,7 +53,7 @@ jobs:
     steps:
     - name: Checkout repo
       uses: actions/checkout@v4
-    - uses: astral-sh/setup-uv@v2
+    - uses: astral-sh/setup-uv@v3
     - name: Build sdist
       run: uv build --sdist
     - name: Upload sdist
@@ -68,7 +68,7 @@ jobs:
     steps:
     - name: Checkout repo
       uses: actions/checkout@v4
-    - uses: astral-sh/setup-uv@v2
+    - uses: astral-sh/setup-uv@v3
       with:
         enable-cache: true
     - name: Install build time dependencies
@@ -102,7 +102,7 @@ jobs:
         merge-multiple: true
 
     - name: Publish to PyPI
-      uses: pypa/gh-action-pypi-publish@v1.10.0
+      uses: pypa/gh-action-pypi-publish@v1.10.2
       with:
         user: __token__
         password: ${{ secrets.pypi_token }}
