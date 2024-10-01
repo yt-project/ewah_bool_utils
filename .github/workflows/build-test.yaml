@@ -44,9 +44,7 @@ jobs:
     steps:
     - name: Checkout repo
       uses: actions/checkout@v4
-    - uses: astral-sh/setup-uv@v2
-      with:
-        enable-cache: true
+    - uses: astral-sh/setup-uv@v3
 
     - name: Build
       run: |
