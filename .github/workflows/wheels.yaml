@@ -31,7 +31,7 @@ jobs:
 
     - uses: astral-sh/setup-uv@v3
     - name: Build wheels for CPython
-      uses: pypa/cibuildwheel@v2.21.1
+      uses: pypa/cibuildwheel@v2.21.3
       with:
         output-dir: dist
       env:
@@ -97,7 +97,7 @@ jobs:
         merge-multiple: true
 
     - name: Publish to PyPI
-      uses: pypa/gh-action-pypi-publish@v1.10.2
+      uses: pypa/gh-action-pypi-publish@v1.11.0
       with:
         user: __token__
         password: ${{ secrets.pypi_token }}
