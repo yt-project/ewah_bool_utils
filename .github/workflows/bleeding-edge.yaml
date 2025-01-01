@@ -31,14 +31,16 @@ jobs:
       with:
         python-version: 3.13-dev
     - uses: astral-sh/setup-uv@v5
-
+    - name: Configure uv
+      run: |
+        echo "UV_PYTHON_PREFERENCE=only-system" >> $GITHUB_ENV
+        echo "UV_PRERELEASE=allow" >> $GITHUB_ENV
+        echo "UV_EXTRA_INDEX_URL=https://pypi.anaconda.org/scientific-python-nightly-wheels/simple" >> $GITHUB_ENV
+        echo "UV_PYTHON=3.13" >> $GITHUB_ENV
     - name: Install dependencies
       run: |
         uv venv
-        uv pip install --upgrade setuptools wheel
-        uv pip install --pre --no-build numpy \
-         --extra-index-url https://pypi.anaconda.org/scientific-python-nightly-wheels/simple
-        uv pip install --pre Cython
+        uv pip install --no-build setuptools wheel numpy Cython
 
     - name: Build
       # --no-build-isolation is used to guarantee that build time dependencies
@@ -46,7 +48,7 @@ jobs:
       # to use the dev version of numpy at build time.
       run: |
         uv pip install -e . --no-build-isolation
-        uv pip install --pre pytest
+        uv pip install pytest
 
     - run: uv pip list
 

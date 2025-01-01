@@ -66,15 +66,14 @@ jobs:
     - name: Checkout repo
       uses: actions/checkout@v4
     - uses: astral-sh/setup-uv@v5
+      with:
+        python-version: '3.13'
     - name: Install build time dependencies
       run: |
-        uv venv
-        uv pip install 'Cython>=3.0' 'numpy>=2.0.0' setuptools wheel check-manifest
+        uv pip install Cython numpy setuptools wheel check-manifest
     - name: Build
       run: uv pip install --no-build-isolation .
-    - run: |
-        source .venv/bin/activate
-        check-manifest
+    - run: check-manifest
 
   deploy:
     name: Publish to PyPI

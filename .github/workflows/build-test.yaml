@@ -46,20 +46,14 @@ jobs:
     - name: Checkout repo
       uses: actions/checkout@v4
     - uses: astral-sh/setup-uv@v5
+      with:
+        python-version: ${{ matrix.python-version }}
 
     - name: Build
       run: |
-        uv venv --python ${{ matrix.python-version }}
         uv pip install --editable "." ${{ matrix.install-args }}
     - run: uv pip install --requirement test_requirements.txt
     - run: uv pip list
-    - name: Run test suite (UNIX)
-      if: matrix.os != 'windows-latest'
+    - name: Run test suite
       run: |
-        source .venv/bin/activate
-        pytest --color yes -ra
-    - name: Run test suite (Windows)
-      if: matrix.os == 'windows-latest'
-      run: |
-        source .venv/Scripts/activate
         pytest --color yes -ra
