@@ -50,6 +50,11 @@ license-files = [
     "LICENSE",
 ]
 
+[dependency-groups]
+test = [
+    "pytest>=6.2.4",
+]
+
 [tool.ruff.lint]
 exclude = ["*__init__.py"]
 ignore = ["E501"]
@@ -72,9 +77,9 @@ build = "cp39-* cp310-* cp311-* cp312-* cp313-*"
 build-frontend = "build[uv]"
 build-verbosity = 1
 test-skip = "*-musllinux*"
+test-groups = ["test"]
 test-command = [
-    "uv pip install -r {project}/test_requirements.txt",
-    "pytest --pyargs {project} --color=yes -ra",
+    "pytest --pyargs ewah_bool_utils --color=yes -ra",
 ]
 
 [tool.cibuildwheel.linux]

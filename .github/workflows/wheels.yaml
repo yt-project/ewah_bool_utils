@@ -34,10 +34,6 @@ jobs:
       uses: pypa/cibuildwheel@v2.23.2
       with:
         output-dir: dist
-      env:
-        CIBW_TEST_COMMAND: >
-          uv pip install -r {project}/test_requirements.txt
-          && pytest --pyargs ewah_bool_utils --color=yes
 
     - uses: actions/upload-artifact@v4
       with:
