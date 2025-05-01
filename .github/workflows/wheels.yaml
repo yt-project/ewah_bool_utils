@@ -64,6 +64,7 @@ jobs:
     - uses: astral-sh/setup-uv@v6
       with:
         python-version: '3.13'
+        activate-environment: true
     - name: Install build time dependencies
       run: |
         uv pip install Cython numpy setuptools wheel check-manifest

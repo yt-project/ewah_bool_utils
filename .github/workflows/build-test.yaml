@@ -54,4 +54,4 @@ jobs:
         uv sync --group test ${{ matrix.install-args }}
     - name: Run test suite
       run: |
-        pytest --color yes -ra
+        uv run --no-sync pytest --color yes -ra
