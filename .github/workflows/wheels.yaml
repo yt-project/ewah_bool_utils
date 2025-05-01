@@ -29,9 +29,9 @@ jobs:
     - name: Checkout repo
       uses: actions/checkout@v4
 
-    - uses: astral-sh/setup-uv@v5
+    - uses: astral-sh/setup-uv@v6
     - name: Build wheels for CPython
-      uses: pypa/cibuildwheel@v2.23.2
+      uses: pypa/cibuildwheel@v2.23.3
       with:
         output-dir: dist
 
@@ -46,7 +46,7 @@ jobs:
     steps:
     - name: Checkout repo
       uses: actions/checkout@v4
-    - uses: astral-sh/setup-uv@v5
+    - uses: astral-sh/setup-uv@v6
     - name: Build sdist
       run: uv build --sdist
     - name: Upload sdist
@@ -61,7 +61,7 @@ jobs:
     steps:
     - name: Checkout repo
       uses: actions/checkout@v4
-    - uses: astral-sh/setup-uv@v5
+    - uses: astral-sh/setup-uv@v6
       with:
         python-version: '3.13'
     - name: Install build time dependencies
