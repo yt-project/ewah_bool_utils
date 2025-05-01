@@ -45,7 +45,7 @@ jobs:
     steps:
     - name: Checkout repo
       uses: actions/checkout@v4
-    - uses: astral-sh/setup-uv@v5
+    - uses: astral-sh/setup-uv@v6
       with:
         python-version: ${{ matrix.python-version }}
 
@@ -54,4 +54,4 @@ jobs:
         uv sync --group test ${{ matrix.install-args }}
     - name: Run test suite
       run: |
-        pytest --color yes -ra
+        uv run --no-sync pytest --color yes -ra

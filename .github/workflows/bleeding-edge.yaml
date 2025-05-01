@@ -26,21 +26,17 @@ jobs:
     steps:
     - name: Checkout repo
       uses: actions/checkout@v4
-    - name: Set up Python (newest testable version)
-      uses: actions/setup-python@v5
+    - uses: astral-sh/setup-uv@v6
       with:
-        python-version: 3.13-dev
-    - uses: astral-sh/setup-uv@v5
+        python-version: '3.13'
+        activate-environment: true
     - name: Configure uv
       run: |
-        echo "UV_PYTHON_PREFERENCE=only-system" >> $GITHUB_ENV
         echo "UV_PRERELEASE=allow" >> $GITHUB_ENV
         echo "UV_INDEX=https://pypi.anaconda.org/scientific-python-nightly-wheels/simple" >> $GITHUB_ENV
         echo "UV_INDEX_STRATEGY=unsafe-best-match" >> $GITHUB_ENV
-        echo "UV_PYTHON=3.13" >> $GITHUB_ENV
     - name: Install dependencies
       run: |
-        uv venv
         uv pip install --no-build setuptools wheel numpy Cython
 
     - name: Build
@@ -48,15 +44,12 @@ jobs:
       # are not installed by pip as specified from pyproject.toml, hence we get
       # to use the dev version of numpy at build time.
       run: |
-        uv pip install -e . --no-build-isolation
-        uv pip install pytest
+        uv pip install -e . --no-build-isolation --group test
 
     - run: uv pip list
 
     - name: Run Tests
-      run: |
-        source .venv/bin/activate
-        pytest --color=yes -ra
+      run: pytest --color=yes -ra
 
   create-issue:
     if: ${{ failure() && github.event_name == 'schedule' }}
