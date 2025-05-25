@@ -26,9 +26,14 @@ jobs:
     steps:
     - name: Checkout repo
       uses: actions/checkout@v4
+    - uses: actions/setup-python@v5
+      with:
+        # numpy cp314 nightlies require at least 3.14.0b1, which is not available
+        # at the time of writing.
+        python-version: '3.14'
+        allow-prereleases: true
     - uses: astral-sh/setup-uv@v6
       with:
-        python-version: '3.13'
         activate-environment: true
     - name: Configure uv
       run: |
