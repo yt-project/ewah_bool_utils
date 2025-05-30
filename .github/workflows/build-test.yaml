@@ -21,23 +21,22 @@ jobs:
         os:
         - ubuntu-latest
         python-version:
-        - '3.9'
-        - '3.10'
+        - 3.10.0
         - '3.11'
         - '3.12'
         - '3.13'
         # Test all on ubuntu, test ends on macos and windows
         include:
         - os: macos-latest
-          python-version: '3.9'
+          python-version: 3.10.0
         - os: windows-latest
-          python-version: '3.9'
+          python-version: 3.10.0
         - os: macos-latest
           python-version: '3.13'
         - os: windows-latest
           python-version: '3.13'
         - os: ubuntu-22.04
-          python-version: '3.9'
+          python-version: 3.10.0
           install-args: --resolution=lowest-direct
 
     runs-on: ${{ matrix.os }}
