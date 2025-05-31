@@ -36,7 +36,6 @@ jobs:
       with:
         output-dir: dist
       env:
-        EWAH_BOOL_UTILS_PY_LIMITED_API: '1'
         RUST_LOG: uv=debug
 
     - uses: actions/upload-artifact@v4
