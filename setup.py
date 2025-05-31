@@ -69,7 +69,7 @@ USE_PY_LIMITED_API = (
     and sys.version_info >= (3, 11)
     and not sysconfig.get_config_var("Py_GIL_DISABLED")
 )
-print(f"{os.environ.get("EWAH_BOOL_UTILS_PY_LIMITED_API")=}")
+print(f"{os.environ.get('EWAH_BOOL_UTILS_PY_LIMITED_API')=}")
 print(f"{(sys.version_info>=(3,11))=}")
 print(f"{sysconfig.get_config_var('Py_GIL_DISABLED')=}")
 print(f"{USE_PY_LIMITED_API=}")
