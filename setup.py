@@ -60,8 +60,14 @@ def pyver_hex() -> str:
         return hex_
 
 
-USE_PY_LIMITED_API = sys.version_info >= (3, 11) and not sysconfig.get_config_var(
-    "Py_GIL_DISABLED"
+# restrict LIMITED_API usage:
+# - require an env var EWAH_BOOL_UTILS_PY_LIMITED_API=1
+# - compiling with Python 3.10 doesn't work (as of Cython 3.1.1)
+# - LIMITED_API is not compatible with free-threading (as of CPython 3.14)
+USE_PY_LIMITED_API = (
+    os.environ.get("EWAH_BOOL_UTILS_PY_LIMITED_API") == "1"
+    and sys.version_info >= (3, 11)
+    and not sysconfig.get_config_var("Py_GIL_DISABLED")
 )
 ABI3_TARGET_VERSION = "".join(str(_) for _ in sys.version_info[:2])
 ABI3_TARGET_HEX = pyver_hex()
@@ -72,7 +78,6 @@ class bdist_wheel_abi3(bdist_wheel):
         python, abi, plat = super().get_tag()
 
         if python.startswith("cp") and USE_PY_LIMITED_API:
-            # on CPython, our wheels are abi3 and compatible back to 3.11
             return f"cp{ABI3_TARGET_VERSION}", "abi3", plat
 
         return python, abi, plat
