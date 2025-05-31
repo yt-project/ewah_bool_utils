@@ -1,5 +1,6 @@
 import os
 import sys
+import sysconfig
 from distutils.ccompiler import get_default_compiler
 from enum import IntEnum
 
@@ -59,7 +60,9 @@ def pyver_hex() -> str:
         return hex_
 
 
-USE_PY_LIMITED_API = sys.version_info >= (3, 11)
+USE_PY_LIMITED_API = sys.version_info >= (3, 11) and not sysconfig.get_config_var(
+    "Py_GIL_DISABLED"
+)
 ABI3_TARGET_VERSION = "".join(str(_) for _ in sys.version_info[:2])
 ABI3_TARGET_HEX = pyver_hex()
 
