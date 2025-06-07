@@ -2,7 +2,6 @@ import os
 import sys
 import sysconfig
 from distutils.ccompiler import get_default_compiler
-from enum import IntEnum
 
 import numpy as np
 from Cython.Build import cythonize
@@ -24,42 +23,6 @@ else:
     std_libs = ["m"]
 
 
-class Level(IntEnum):
-    MAJOR = 0x01000000
-    MINOR = 0x00010000
-    MICRO = 0x00000100
-    ALPHA = 0xA0
-    BETA = 0xB0
-    CANDIDATE = 0xC0
-    FINAL = 0xF0
-
-
-def pyver_hex() -> str:
-    vi = sys.version_info
-    if vi.releaselevel == "alpha":
-        level = Level.ALPHA
-    elif vi.releaselevel == "beta":
-        level = Level.BETA
-    elif vi.releaselevel == "candidate":
-        level = Level.CANDIDATE
-    elif vi.releaselevel == "final":
-        level = Level.FINAL
-    else:
-        raise RuntimeError
-    hex_ = hex(
-        int(vi.major) * Level.MAJOR
-        + int(vi.minor) * Level.MINOR
-        + int(vi.micro) * Level.MICRO
-        + level
-        + int(vi.serial)
-    )
-    MIN_SIZE = 8
-    if len(hex_.removeprefix("0x")) < MIN_SIZE:
-        return hex_[:2] + hex_[2:].zfill(MIN_SIZE)
-    else:
-        return hex_
-
-
 # restrict LIMITED_API usage:
 # - require an env var EWAH_BOOL_UTILS_PY_LIMITED_API=1
 # - compiling with Python 3.10 doesn't work (as of Cython 3.1.1)
@@ -70,7 +33,7 @@ USE_PY_LIMITED_API = (
     and not sysconfig.get_config_var("Py_GIL_DISABLED")
 )
 ABI3_TARGET_VERSION = "".join(str(_) for _ in sys.version_info[:2])
-ABI3_TARGET_HEX = pyver_hex()
+ABI3_TARGET_HEX = hex(sys.hexversion & 0xFFFF00F0)
 
 
 class bdist_wheel_abi3(bdist_wheel):
