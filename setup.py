@@ -24,11 +24,11 @@ else:
 
 
 # restrict LIMITED_API usage:
-# - require an env var EWAH_BOOL_UTILS_PY_LIMITED_API=1
+# - require an env var EWAH_BOOL_UTILS_LIMITED_API=1
 # - compiling with Python 3.10 doesn't work (as of Cython 3.1.1)
 # - LIMITED_API is not compatible with free-threading (as of CPython 3.14)
 USE_PY_LIMITED_API = (
-    os.environ.get("EWAH_BOOL_UTILS_PY_LIMITED_API") == "1"
+    os.environ.get("EWAH_BOOL_UTILS_LIMITED_API") == "1"
     and sys.version_info >= (3, 11)
     and not sysconfig.get_config_var("Py_GIL_DISABLED")
 )
