@@ -83,7 +83,7 @@ test-groups = ["test"]
 test-command = [
     "pytest --pyargs ewah_bool_utils --color=yes -ra",
 ]
-environment = {EWAH_BOOL_UTILS_PY_LIMITED_API="1"}
+environment = {EWAH_BOOL_UTILS_LIMITED_API="1"}
 
 [tool.cibuildwheel.linux]
 archs = "x86_64"
