@@ -75,13 +75,12 @@ select = [
 combine-as-imports = true
 
 [tool.cibuildwheel]
-build = "cp310-* cp311-* cp312-* cp313-*"
 build-frontend = "build[uv]"
 build-verbosity = 1
 test-skip = "*-musllinux*"
 test-groups = ["test"]
 test-command = [
-    "pytest --pyargs ewah_bool_utils --color=yes -ra",
+    "python -m pytest --pyargs ewah_bool_utils --color=yes -ra",
 ]
 environment = {EWAH_BOOL_UTILS_LIMITED_API="1"}
 
