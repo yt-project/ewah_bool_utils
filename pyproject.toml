@@ -79,7 +79,6 @@ combine-as-imports = true
 enable = ["cpython-prerelease"]
 build-frontend = "build[uv]"
 build-verbosity = 1
-test-skip = "*-musllinux*"
 test-groups = ["test"]
 test-command = [
     "python -m pytest --pyargs ewah_bool_utils --color=yes -ra",
