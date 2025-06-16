@@ -33,6 +33,7 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
     "Programming Language :: Python :: Free Threading :: 1 - Unstable"
 ]
 
@@ -75,6 +76,7 @@ select = [
 combine-as-imports = true
 
 [tool.cibuildwheel]
+enable = ["cpython-prerelease"]
 build-frontend = "build[uv]"
 build-verbosity = 1
 test-skip = "*-musllinux*"
@@ -92,3 +94,8 @@ archs = "auto64"
 
 [tool.cibuildwheel.windows]
 archs = "auto64"
+
+[[tool.cibuildwheel.overrides]]
+# Install numpy from nightly wheels as not yet on PyPI.
+select = "cp314*"
+before-test = "uv pip install --pre --extra-index-url https://pypi.anaconda.org/scientific-python-nightly-wheels/simple numpy"
