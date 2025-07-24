@@ -76,7 +76,7 @@ select = [
 combine-as-imports = true
 
 [tool.cibuildwheel]
-enable = ["cpython-prerelease"]
+skip = ["cp314t-*"]
 build-frontend = "build[uv]"
 build-verbosity = 1
 test-groups = ["test"]
