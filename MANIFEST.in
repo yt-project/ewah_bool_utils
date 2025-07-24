@@ -1,14 +1,12 @@
 include AUTHORS.rst
 include CONTRIBUTING.rst
 include HISTORY.rst
-include LICENSE
 include README.rst
 
 include *.py
 include *.txt
 
 include ewah_bool_utils/cpp/*.h
-include ewah_bool_utils/cpp/LICENSE
 include ewah_bool_utils/cpp/README
 
 recursive-include ewah_bool_utils *.pxd

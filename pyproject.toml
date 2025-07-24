@@ -1,7 +1,7 @@
 [build-system]
 # keep in sync with wheels.yaml
 requires = [
-    "setuptools>=61.2",
+    "setuptools>=66.1",
     "wheel>=0.45.0",
     "Cython>=3.0.12 ; python_version < '3.11'",
     "Cython>=3.1.1 ; python_version >= '3.11'",
@@ -23,10 +23,14 @@ dependencies = [
   # level of support for our minimal Python requirement
   "numpy>=1.21.2, <3",
 ]
+license = "Apache-2.0 AND BSD-2-Clause"
+license-files = [
+    "LICENSE",
+    "ewah_bool_utils/cpp/LICENSE",
+]
 classifiers = [
     "Intended Audience :: Developers",
     "Development Status :: 5 - Production/Stable",
-    "License :: OSI Approved :: BSD License",
     "Programming Language :: Cython",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.10",
@@ -37,9 +41,6 @@ classifiers = [
     "Programming Language :: Python :: Free Threading :: 1 - Unstable"
 ]
 
-[project.license]
-text = "BSD"
-
 [project.readme]
 file = "README.rst"
 content-type = "text/x-rst"
@@ -47,11 +48,6 @@ content-type = "text/x-rst"
 
 [project.urls]
 Homepage = "https://github.com/yt-project/ewah_bool_utils"
-
-[tool.setuptools]
-license-files = [
-    "LICENSE",
-]
 
 [dependency-groups]
 test = [
