@@ -80,12 +80,3 @@ test-command = [
     "python -m pytest --pyargs ewah_bool_utils --color=yes -ra",
 ]
 environment = {EWAH_BOOL_UTILS_LIMITED_API="1"}
-
-[tool.cibuildwheel.linux]
-archs = "x86_64"
-
-[tool.cibuildwheel.macos]
-archs = "auto64"
-
-[tool.cibuildwheel.windows]
-archs = "auto64"
