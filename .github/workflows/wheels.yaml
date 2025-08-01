@@ -48,7 +48,7 @@ jobs:
 
     - uses: astral-sh/setup-uv@e92bafb6253dcd438e0484186d7669ea7a8ca1cc # v6.4.3
     - name: Build wheels for CPython
-      uses: pypa/cibuildwheel@1953c0497215dcf2711e1fbfd3ae8952e8ad604c # v3.1.2
+      uses: pypa/cibuildwheel@352e01339f0a173aa2a3eb57f01492e341e83865 # v3.1.2
       with:
         output-dir: dist
       env:
