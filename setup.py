@@ -37,13 +37,10 @@ ABI3_TARGET_HEX = hex(sys.hexversion & 0xFFFF00F0)
 
 
 class bdist_wheel_abi3(bdist_wheel):
-    def get_tag(self):
-        python, abi, plat = super().get_tag()
-
-        if python.startswith("cp") and USE_PY_LIMITED_API:
-            return f"cp{ABI3_TARGET_VERSION}", "abi3", plat
-
-        return python, abi, plat
+    def finalize_options(self):
+        if USE_PY_LIMITED_API:
+            self.py_limited_api = f"cp{ABI3_TARGET_VERSION}"
+        super().finalize_options()
 
 
 define_macros = [
