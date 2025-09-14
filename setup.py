@@ -6,7 +6,6 @@ from distutils.ccompiler import get_default_compiler
 import numpy as np
 from Cython.Build import cythonize
 from setuptools import Extension, setup
-from wheel.bdist_wheel import bdist_wheel
 
 from setupext import check_for_openmp
 
@@ -34,13 +33,6 @@ USE_PY_LIMITED_API = (
 )
 ABI3_TARGET_VERSION = "".join(str(_) for _ in sys.version_info[:2])
 ABI3_TARGET_HEX = hex(sys.hexversion & 0xFFFF00F0)
-
-
-class bdist_wheel_abi3(bdist_wheel):
-    def finalize_options(self):
-        if USE_PY_LIMITED_API:
-            self.py_limited_api = f"cp{ABI3_TARGET_VERSION}"
-        super().finalize_options()
 
 
 define_macros = [
@@ -82,10 +74,15 @@ extensions = [
     ),
 ]
 
+if USE_PY_LIMITED_API:
+    options = {"bdist_wheel": {"py_limited_api": f"cp{ABI3_TARGET_VERSION}"}}
+else:
+    options = {}
+
 setup(
     ext_modules=cythonize(
         extensions,
         compiler_directives={"language_level": 3},
     ),
-    cmdclass={"bdist_wheel": bdist_wheel_abi3},
+    options=options,
 )
