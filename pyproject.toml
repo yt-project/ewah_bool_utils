@@ -2,7 +2,6 @@
 # keep in sync with wheels.yaml
 requires = [
     "setuptools>=66.1",
-    "wheel>=0.45.0",
     "Cython>=3.0.12 ; python_version < '3.11'",
     "Cython>=3.1.1 ; python_version >= '3.11'",
     "numpy>=2.0.0",
