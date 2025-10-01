@@ -13,6 +13,8 @@ on:
     - pyproject.toml
   workflow_dispatch:
 
+permissions: {}
+
 jobs:
   build_wheels:
     name: Build ${{ matrix.archs }} wheels on ${{ matrix.os }}
