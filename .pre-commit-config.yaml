@@ -11,7 +11,7 @@ ci:
 repos:
 
 - repo: https://github.com/pre-commit/pre-commit-hooks
-  rev: v5.0.0
+  rev: v6.0.0
   hooks:
   - id: no-commit-to-branch
   - id: debug-statements
@@ -28,7 +28,7 @@ repos:
   - id: zizmor
 
 - repo: https://github.com/astral-sh/ruff-pre-commit
-  rev: v0.12.2
+  rev: v0.13.3
   hooks:
   - id: ruff-format
   - id: ruff-check
@@ -46,7 +46,7 @@ repos:
     args: [--autofix]
 
 - repo: https://github.com/MarcoGorelli/cython-lint
-  rev: v0.16.7
+  rev: v0.17.0
   hooks:
   - id: cython-lint
     args: [--no-pycodestyle]
