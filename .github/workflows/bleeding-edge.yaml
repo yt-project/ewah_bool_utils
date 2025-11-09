@@ -72,7 +72,7 @@ jobs:
         echo "PYTHON_GIL=0" >> $GITHUB_ENV
 
     - name: Run Tests
-      run: pytest --color=yes -ra
+      run: pytest --color=yes
 
   create-issue:
     if: ${{ failure() && github.event_name == 'schedule' }}

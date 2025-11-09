@@ -40,7 +40,7 @@ jobs:
           python-version: '3.14'
         - os: ubuntu-22.04
           python-version: 3.10.0
-          install-args: --resolution=lowest-direct
+          install-args: --resolution=lowest
 
     runs-on: ${{ matrix.os }}
 
@@ -58,4 +58,4 @@ jobs:
         uv sync --group test ${{ matrix.install-args }}
     - name: Run test suite
       run: |
-        uv run --no-sync pytest --color yes -ra
+        uv run --no-sync pytest --color yes

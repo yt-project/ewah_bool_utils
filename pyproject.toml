@@ -50,7 +50,7 @@ Homepage = "https://github.com/yt-project/ewah_bool_utils"
 
 [dependency-groups]
 test = [
-    "pytest>=7.0.0",
+    "pytest>=9.0.0",
 ]
 
 [tool.ruff.lint]
@@ -70,12 +70,20 @@ select = [
 [tool.ruff.lint.isort]
 combine-as-imports = true
 
+[tool.pytest]
+minversion = "9.0"
+strict = true
+addopts = ["-ra"]
+filterwarnings = [
+    "error",
+]
+
 [tool.cibuildwheel]
 skip = ["cp314t-*"]
 build-frontend = "build[uv]"
 build-verbosity = 1
 test-groups = ["test"]
 test-command = [
-    "python -m pytest --pyargs ewah_bool_utils --color=yes -ra",
+    "python -m pytest --pyargs ewah_bool_utils --color=yes",
 ]
 environment = {EWAH_BOOL_UTILS_LIMITED_API="1"}
