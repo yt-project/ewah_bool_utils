@@ -20,4 +20,5 @@ exclude ewah_bool_utils/morton_utils.c
 recursive-include docs *.rst conf.py Makefile make.bat
 
 exclude .pre-commit-config.yaml
+exclude uv.lock
 recursive-exclude */__pycache__ *
