@@ -54,14 +54,11 @@ jobs:
         echo "UV_INDEX=https://pypi.anaconda.org/scientific-python-nightly-wheels/simple" >> $GITHUB_ENV
         echo "UV_INDEX_STRATEGY=unsafe-best-match" >> $GITHUB_ENV
     - name: Install dependencies
-      run: uv pip install --no-build setuptools numpy Cython
+      run: uv sync --only-dev
 
     - name: Build
-      # --no-build-isolation is used to guarantee that build time dependencies
-      # are not installed by pip as specified from pyproject.toml, hence we get
-      # to use the dev version of numpy at build time.
       run: |
-        uv pip install -e . --no-build-isolation --group test
+        uv sync --no-build-isolation --group test
 
     - run: uv pip list
 
@@ -70,7 +67,7 @@ jobs:
         echo "PYTHON_GIL=0" >> $GITHUB_ENV
 
     - name: Run Tests
-      run: pytest --color=yes
+      run: uv run --no-sync pytest --color=yes
 
   create-issue:
     if: ${{ failure() && github.event_name == 'schedule' }}

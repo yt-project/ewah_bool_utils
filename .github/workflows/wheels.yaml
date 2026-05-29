@@ -31,7 +31,7 @@ jobs:
           archs: x86_64
           select: '*musllinux*'
           id: musllinux_x86_64
-        - os: macos-latest
+        - os: macos-15-intel
           archs: x86_64
           select: '*'
           id: macos_x86_64
@@ -43,6 +43,10 @@ jobs:
           archs: AMD64
           select: '*'
           id: windows_AMD64
+        #- os: windows-11-arm
+        #  archs: ARM64
+        #  select: '*'
+        #  id: windows_ARM64
 
     steps:
     - name: Checkout repo
@@ -77,6 +81,7 @@ jobs:
     - uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b # v8.1.0
       with:
         enable-cache: false
+    - run: uv sync --only-dev
     - name: Build sdist
       run: uv build --sdist
     - name: Upload sdist
@@ -85,29 +90,9 @@ jobs:
         name: sdist
         path: dist/*.tar.gz
 
-  check_manifest:
-    name: Check MANIFEST.in
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout repo
-      uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-      with:
-        persist-credentials: false
-    - uses: astral-sh/setup-uv@08807647e7069bb48b6ef5acd8ec9567f424441b # v8.1.0
-      with:
-        python-version: '3.13'
-        activate-environment: true
-        enable-cache: false
-    - name: Install build time dependencies
-      run: |
-        uv pip install Cython numpy setuptools wheel check-manifest
-    - name: Build
-      run: uv pip install --no-build-isolation .
-    - run: check-manifest
-
   deploy:
     name: Publish to PyPI
-    needs: [build_wheels, build_sdist, check_manifest]
+    needs: [build_wheels, build_sdist]
     runs-on: ubuntu-latest
     # upload to PyPI on every tag starting with 'v'
     if: github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags/v')

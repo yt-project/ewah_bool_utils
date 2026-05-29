@@ -1,0 +1,6 @@
+option(
+    'enable-openmp',
+    type: 'boolean',
+    value: false,
+    description: 'Enable compilation with OpenMP support',
+)
