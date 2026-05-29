@@ -24,13 +24,10 @@ else:
 
 # restrict LIMITED_API usage:
 # - require an env var EWAH_BOOL_UTILS_LIMITED_API=1
-# - compiling with Python 3.10 doesn't work (as of Cython 3.1.1)
 # - LIMITED_API is not compatible with free-threading (as of CPython 3.14)
-USE_PY_LIMITED_API = (
-    os.environ.get("EWAH_BOOL_UTILS_LIMITED_API") == "1"
-    and sys.version_info >= (3, 11)
-    and not sysconfig.get_config_var("Py_GIL_DISABLED")
-)
+USE_PY_LIMITED_API = os.environ.get(
+    "EWAH_BOOL_UTILS_LIMITED_API"
+) == "1" and not sysconfig.get_config_var("Py_GIL_DISABLED")
 ABI3_TARGET_VERSION = "".join(str(_) for _ in sys.version_info[:2])
 ABI3_TARGET_HEX = hex(sys.hexversion & 0xFFFF00F0)
 
@@ -38,7 +35,7 @@ ABI3_TARGET_HEX = hex(sys.hexversion & 0xFFFF00F0)
 define_macros = [
     ("NPY_NO_DEPRECATED_API", "NPY_1_7_API_VERSION"),
     # keep in sync with runtime requirements (pyproject.toml)
-    ("NPY_TARGET_VERSION", "NPY_1_19_API_VERSION"),
+    ("NPY_TARGET_VERSION", "NPY_1_23_API_VERSION"),
 ]
 if USE_PY_LIMITED_API:
     define_macros.append(("Py_LIMITED_API", ABI3_TARGET_HEX))
