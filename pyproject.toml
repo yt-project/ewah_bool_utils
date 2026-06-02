@@ -79,7 +79,7 @@ filterwarnings = [
 
 [tool.cibuildwheel]
 skip = ["cp314t-*"]
-build-frontend = "build[uv]"
+build-frontend = "uv; args: --no-config"
 build-verbosity = 1
 test-groups = ["test"]
 test-command = [
