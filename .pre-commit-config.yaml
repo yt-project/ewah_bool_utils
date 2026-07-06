@@ -23,12 +23,12 @@ repos:
   - id: check-executables-have-shebangs
 
 - repo: https://github.com/zizmorcore/zizmor-pre-commit
-  rev: v1.25.2
+  rev: v1.26.1
   hooks:
   - id: zizmor
 
 - repo: https://github.com/astral-sh/ruff-pre-commit
-  rev: v0.15.9
+  rev: v0.15.20
   hooks:
   - id: ruff-format
   - id: ruff-check
@@ -46,7 +46,7 @@ repos:
     args: [--autofix]
 
 - repo: https://github.com/MarcoGorelli/cython-lint
-  rev: v0.19.0
+  rev: v0.21.0
   hooks:
   - id: cython-lint
     args: [--no-pycodestyle]
