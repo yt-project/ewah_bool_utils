@@ -102,7 +102,7 @@ filterwarnings = [
 ]
 
 [tool.cibuildwheel]
-skip = ["cp3{14,15}t-*"]
+skip = ["cp314t-*"]
 build-frontend = "uv; args: -Csetup-args='-Dpython.allow_limited_api=true' --no-config"
 build-verbosity = 1
 test-groups = ["test"]
