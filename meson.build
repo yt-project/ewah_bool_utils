@@ -43,6 +43,17 @@ py.extension_module(
 )
 
 py.extension_module(
+    'api', 
+    'src/ewah_bool_utils/api.pyx',    
+    subdir: 'ewah_bool_utils',
+    install: true,
+    dependencies: [np_dep, ewah_dep],
+    cpp_args: npy_c_args,
+    limited_api: py.language_version(),
+    override_options: ['cython_language=cpp'],
+)
+
+py.extension_module(
     '_testing',
     'src/ewah_bool_utils/_testing.pyx',
     subdir: 'ewah_bool_utils',
@@ -70,7 +81,7 @@ py.install_sources(
 
 py.install_sources(
     'tests/__init__.py',
-    'tests/test_ewah_bool_utils.py',
+    'tests/test_ewah_bool_utils.py',    
     subdir: 'tests',
 )
 
