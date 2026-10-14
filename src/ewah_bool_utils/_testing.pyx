@@ -5,7 +5,7 @@ cimport numpy as np
 from libcpp.vector cimport vector
 
 from .ewah_bool_array cimport ewah_bool_array
-
+from ewah_bool_utils.capi cimport bool_array_collection as bac_api
 import numpy as np
 
 
@@ -122,3 +122,8 @@ cpdef dtype_t[:] make_and_select_from_ewah_index(dtype_t[:] arr,
       idx.set_from(np_idx)
       out_arr = idx.select(arr)
       return out_arr
+
+
+def bac_check_empty():
+    coll = bac_api.new()
+    return bac_api.count_total(coll)
