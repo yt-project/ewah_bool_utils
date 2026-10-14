@@ -10,7 +10,7 @@ from ewah_bool_utils.ewah_bool_wrap import BoolArrayCollection
 # minimal tests on empty collections
 class TestEmptyBoolArrayCollections:
 
-    def tet_new(self):
+    def test_new(self):
         assert isinstance(bac_new(), BoolArrayCollection)
 
     def test_empty_is_empty(self):
