@@ -311,3 +311,21 @@ def bac_logicalxor(a, b) -> list:
 
 def bac_richcmp(a, b, op) -> int:
     return bac_api.richcmp(_bac_from(a), _bac_from(b), op)
+
+
+def bac_set_refined_words(i1, words, probes) -> dict:
+    coll = bac_api.new()
+    cdef np.uint32_t[::1] w = np.array(words, dtype=np.uint32)
+    bac_api.set_refined_words(coll, i1, w)
+    bac_api.set_coarse(coll, i1)
+    return {
+        "isref": bac_api.isref(coll, i1),
+        "get": [bac_api.get(coll, i1, i2) for i2 in probes],
+    }
+
+
+def bac_set_refined_words_twice(i1, words):
+    coll = bac_api.new()
+    cdef np.uint32_t[::1] w = np.array(words, dtype=np.uint32)
+    bac_api.set_refined_words(coll, i1, w)
+    bac_api.set_refined_words(coll, i1, w)

@@ -26,6 +26,8 @@ from ewah_bool_utils._testing import (
     bac_set_refined,
     bac_set_refined_array,
     bac_set_refined_only,
+    bac_set_refined_words,
+    bac_set_refined_words_twice,
 )
 from ewah_bool_utils.ewah_bool_wrap import BoolArrayCollection
 
@@ -149,3 +151,12 @@ class TestPopulatedBoolArrayCollections:
         assert bac_richcmp([1, 2], [1, 2], 2) == 1
         assert bac_richcmp([1, 2], [1, 3], 2) == 0
         assert bac_richcmp([1, 2], [1, 3], 3) == 1
+
+    def test_set_refined_words(self):
+        # two 32-bit words with bit 1 set: refined indices 1 and 33
+        assert bac_set_refined_words(5, [0b10, 0b10], [0, 1, 32, 33]) == {
+            "isref": True,
+            "get": [False, True, False, True],
+        }
+        with pytest.raises(ValueError):
+            bac_set_refined_words_twice(5, [0b10])

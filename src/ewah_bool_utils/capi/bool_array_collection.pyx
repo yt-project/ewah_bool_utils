@@ -2,11 +2,19 @@ from ewah_bool_utils.ewah_bool_wrap cimport (
     BoolArrayCollection,
 )
 from cython.operator cimport dereference, preincrement
-from libc.stdint cimport uint64_t, uint8_t
+from libc.stdint cimport uint32_t, uint64_t, uint8_t
 
-from ewah_bool_utils.ewah_bool_array cimport ewah_bool_array, ewah_bool_iterator
+from ewah_bool_utils.ewah_bool_array cimport (
+    ewah_bool_array,
+    ewah_bool_iterator,
+    ewah_map,
+    ewah_word_type,
+)
 
 cdef uint64_t FLAG = ~(<uint64_t>0)
+
+if sizeof(ewah_word_type) != sizeof(uint32_t):
+    raise ImportError("set_refined_words assumes 32-bit ewah words")
 
 cdef object new():
     return BoolArrayCollection()
@@ -136,7 +144,9 @@ cdef int richcmp(object coll, object other, int op) except -1:
 
 
 # following functions are new encapsulations of procedures in yt
-# that relied on accessing ewah class attributes.
+# that relied on accessing ewah class attributes. With ewal_bool_utils 2.0,
+# we should move these implementations to new methods on the base class
+# and replace the functions here with forwarding calls like above.
 
 cdef uint64_t coarse_indices(object coll, uint64_t[::1] out) except -1:
     """Write the set coarse indices into ``out``; returns the number written."""
@@ -155,3 +165,17 @@ cdef uint64_t coarse_indices(object coll, uint64_t[::1] out) except -1:
         del it
         del end
     return i
+
+
+cdef void set_refined_words(object coll, uint64_t i1,
+                            const uint32_t[::1] words) except *:
+    cdef BoolArrayCollection bac = <BoolArrayCollection>coll
+    cdef ewah_map *ewah_coll = <ewah_map *> bac.ewah_coll
+    cdef ewah_bool_array *ewah_refn = <ewah_bool_array *> bac.ewah_refn
+    cdef ewah_bool_array *entry = &ewah_coll[0][i1]
+    cdef Py_ssize_t i
+    if entry[0].sizeInBits() != 0:
+        raise ValueError(f"refined entry for coarse cell {i1} is not empty")
+    for i in range(words.shape[0]):
+        entry[0].addWord(words[i])
+    ewah_refn[0].set(i1)
