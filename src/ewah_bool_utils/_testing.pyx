@@ -124,6 +124,22 @@ cpdef dtype_t[:] make_and_select_from_ewah_index(dtype_t[:] arr,
       return out_arr
 
 
-def bac_check_empty():
+def bac_new() -> object:
+    return bac_api.new()
+
+def bac_empty() -> int:
     coll = bac_api.new()
     return bac_api.count_total(coll)
+
+def bac_check() -> int:
+    coll = bac_api.new()
+    return bac_api.check(coll)
+
+def bac_dumps() -> bytes:
+    coll = bac_api.new()
+    return bac_api.dumps(coll)
+
+def bac_dumps_loads() -> int:
+    coll = bac_api.new()
+    return bac_api.loads(coll, bac_api.dumps(coll))
+

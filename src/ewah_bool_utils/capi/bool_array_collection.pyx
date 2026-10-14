@@ -16,7 +16,7 @@ cdef bint loads(object coll, bytes s) except -1:
 cdef bytes dumps(object coll):
     return (<BoolArrayCollection>coll)._dumps()
 
-cdef bytes check(object coll):
+cdef bint check(object coll):
     return (<BoolArrayCollection>coll)._check()
 
 cdef void get_ghost_zones(object coll, int ngz, int order1, int order2,
