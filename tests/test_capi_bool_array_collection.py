@@ -3,29 +3,20 @@ import pytest
 from ewah_bool_utils._testing import (
     bac_append,
     bac_check,
-    bac_coarse_array_roundtrip,
-    bac_contains,
     bac_count_total,
-    bac_counts,
     bac_dumps,
     bac_dumps_loads,
     bac_dumps_loads_indices,
-    bac_get_coarse_array,
     bac_ghost_zone_count,
     bac_intersects,
     bac_logicaland,
     bac_logicalor,
-    bac_logicalxor,
     bac_new,
     bac_reset,
-    bac_richcmp,
     bac_select,
     bac_set_coarse_count,
     bac_set_get,
-    bac_set_pieces,
     bac_set_refined,
-    bac_set_refined_array,
-    bac_set_refined_only,
     bac_set_refined_words,
     bac_set_refined_words_twice,
 )
@@ -98,59 +89,6 @@ class TestPopulatedBoolArrayCollections:
     def test_ghost_zones(self):
         # one cell, one layer of periodic ghosts: 3**3 - 1 neighbours
         assert bac_ghost_zone_count(0, 1, 2) == 26
-
-    def test_logicalxor(self):
-        assert bac_logicalxor([1, 2, 3], [2, 3, 4]) == [1, 4]
-
-    def test_contains(self):
-        assert bac_contains([1, 2], 2)
-        assert not bac_contains([1, 2], 3)
-
-    def test_counts(self):
-        # three keys, two of them refined, one coarse-only
-        assert bac_counts([1, 2, 3], [(2, 0), (3, 1)]) == {
-            "total": 3,
-            "refined": 2,
-            "coarse": 1,
-        }
-
-    def test_set_pieces_match_set(self):
-        # set_coarse + set_refn + set_map is the same as a refined set()
-        assert bac_set_pieces(5, 2) == {
-            "get": True,
-            "isref": True,
-            "eq": 1,
-            "ne": 0,
-        }
-
-    def test_set_refined_only(self):
-        # set_refined marks the refinement but not the coarse key
-        assert bac_set_refined_only(5, 2) == {
-            "contains": False,
-            "isref": True,
-            "count_refined": 1,
-        }
-
-    def test_coarse_array_roundtrip(self):
-        flags = [0, 1, 1, 0, 1]
-        assert bac_coarse_array_roundtrip(flags) == flags
-
-    def test_get_coarse_array(self):
-        assert bac_get_coarse_array([1, 3], 5) == [0, 1, 0, 1, 0]
-        with pytest.raises(IndexError):
-            bac_get_coarse_array([1, 7], 5)
-
-    def test_set_refined_array(self):
-        assert bac_set_refined_array(5, [0, 1, 1, 0]) == {
-            "isref": True,
-            "get": [False, True, True, False],
-        }
-
-    def test_richcmp(self):
-        # opcodes follow Python's rich comparison: 2 is ==, 3 is !=
-        assert bac_richcmp([1, 2], [1, 2], 2) == 1
-        assert bac_richcmp([1, 2], [1, 3], 2) == 0
-        assert bac_richcmp([1, 2], [1, 3], 3) == 1
 
     def test_set_refined_words(self):
         # two 32-bit words with bit 1 set: refined indices 1 and 33

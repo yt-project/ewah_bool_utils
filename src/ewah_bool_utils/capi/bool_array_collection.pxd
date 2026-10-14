@@ -25,22 +25,6 @@ cdef bint intersects(object coll, object other) noexcept
 cdef void logicaland(object coll, object other, object out) noexcept
 cdef void logicalor(object coll, object other, object out) noexcept
 
-# following are not used by yt api
-cdef void set_refined(object coll, uint64_t i1, uint64_t i2) noexcept
-cdef void set_map(object coll, uint64_t i1, uint64_t i2) noexcept
-cdef void set_refn(object coll, uint64_t i1) noexcept
-cdef void set_coarse_array(object coll, uint8_t[:] arr) noexcept
-cdef void set_refined_array(object coll, uint64_t mi1, uint8_t[:] arr) noexcept
-cdef void get_coarse_array(object coll, uint64_t imax, uint8_t[:] arr) except *
-
-cdef bint contains(object coll, uint64_t i) noexcept
-cdef void ewah_coarse(object coll) noexcept
-cdef uint64_t count_refined(object coll) noexcept
-cdef uint64_t count_coarse(object coll) noexcept
-
-cdef void logicalxor(object coll, object other, object out) noexcept
-cdef int richcmp(object coll, object other, int op) except -1
-
 # following are new encapsulations of procedures in yt that relied on
 # accessing ewah class attributes.
 cdef uint64_t coarse_indices(object coll, uint64_t[::1] out) except -1

@@ -94,55 +94,6 @@ cdef void logicalor(object coll, object other, object out) noexcept:
         <BoolArrayCollection>other, <BoolArrayCollection>out
     )
 
-cdef void set_refined(object coll, uint64_t i1, uint64_t i2) noexcept:
-    (<BoolArrayCollection>coll)._set_refined(i1, i2)
-
-
-cdef void set_map(object coll, uint64_t i1, uint64_t i2) noexcept:
-    (<BoolArrayCollection>coll)._set_map(i1, i2)
-
-
-cdef void set_refn(object coll, uint64_t i1) noexcept:
-    (<BoolArrayCollection>coll)._set_refn(i1)
-
-
-cdef void set_coarse_array(object coll, uint8_t[:] arr) noexcept:
-    (<BoolArrayCollection>coll)._set_coarse_array(arr)
-
-
-cdef void set_refined_array(object coll, uint64_t mi1, uint8_t[:] arr) noexcept:
-    (<BoolArrayCollection>coll)._set_refined_array(mi1, arr)
-
-
-cdef void get_coarse_array(object coll, uint64_t imax, uint8_t[:] arr) except *:
-    (<BoolArrayCollection>coll)._get_coarse_array(imax, arr)
-
-
-cdef bint contains(object coll, uint64_t i) noexcept:
-    return (<BoolArrayCollection>coll)._contains(i)
-
-
-cdef void ewah_coarse(object coll) noexcept:
-    (<BoolArrayCollection>coll)._ewah_coarse()
-
-
-cdef uint64_t count_refined(object coll) noexcept:
-    return (<BoolArrayCollection>coll)._count_refined()
-
-
-cdef uint64_t count_coarse(object coll) noexcept:
-    return (<BoolArrayCollection>coll)._count_coarse()
-
-
-cdef void logicalxor(object coll, object other, object out) noexcept:
-    (<BoolArrayCollection>coll)._logicalxor(
-        <BoolArrayCollection>other, <BoolArrayCollection>out
-    )
-
-cdef int richcmp(object coll, object other, int op) except -1:
-    return (<BoolArrayCollection>coll)._richcmp(<BoolArrayCollection>other, op)
-
-
 # following functions are new encapsulations of procedures in yt
 # that relied on accessing ewah class attributes. With ewal_bool_utils 2.0,
 # we should move these implementations to new methods on the base class

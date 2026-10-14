@@ -144,7 +144,6 @@ def bac_dumps_loads() -> bool:
     return bac_api.loads(coll, bac_api.dumps(coll))
 
 
-
 cdef object _bac_from(indices):
     coll = bac_api.new()
     for i in indices:
@@ -234,83 +233,6 @@ def bac_ghost_zone_count(i1, ngz, order1) -> int:
     out = bac_api.new()
     bac_api.get_ghost_zones(coll, ngz, order1, 1, periodicity, out, 1)
     return bac_api.count_total(out)
-
-
-def bac_set_pieces(i1, i2) -> dict:
-    """set_coarse + set_refn + set_map should equal a refined set()."""
-    coll = bac_api.new()
-    bac_api.set_coarse(coll, i1)
-    bac_api.set_refn(coll, i1)
-    bac_api.set_map(coll, i1, i2)
-    other = bac_api.new()
-    bac_api.set(other, i1, i2)
-    return {
-        "get": bac_api.get(coll, i1, i2),
-        "isref": bac_api.isref(coll, i1),
-        "eq": bac_api.richcmp(coll, other, 2),
-        "ne": bac_api.richcmp(coll, other, 3),
-    }
-
-
-def bac_set_refined_only(i1, i2) -> dict:
-    coll = bac_api.new()
-    bac_api.set_refined(coll, i1, i2)
-    return {
-        "contains": bac_api.contains(coll, i1),
-        "isref": bac_api.isref(coll, i1),
-        "count_refined": bac_api.count_refined(coll),
-    }
-
-
-def bac_counts(coarse, refined) -> dict:
-    coll = _bac_from(coarse)
-    for i1, i2 in refined:
-        bac_api.set(coll, i1, i2)
-    bac_api.ewah_coarse(coll)
-    return {
-        "total": bac_api.count_total(coll),
-        "refined": bac_api.count_refined(coll),
-        "coarse": bac_api.count_coarse(coll),
-    }
-
-
-def bac_contains(indices, probe) -> bool:
-    return bac_api.contains(_bac_from(indices), probe)
-
-
-def bac_coarse_array_roundtrip(flags) -> list:
-    coll = bac_api.new()
-    cdef np.uint8_t[:] arr = np.array(flags, dtype=np.uint8)
-    bac_api.set_coarse_array(coll, arr)
-    cdef np.uint8_t[:] out = np.zeros(len(flags), dtype=np.uint8)
-    bac_api.get_coarse_array(coll, len(flags), out)
-    return np.asarray(out).tolist()
-
-
-def bac_get_coarse_array(indices, imax) -> list:
-    cdef np.uint8_t[:] out = np.zeros(imax, dtype=np.uint8)
-    bac_api.get_coarse_array(_bac_from(indices), imax, out)
-    return np.asarray(out).tolist()
-
-
-def bac_set_refined_array(mi1, flags) -> dict:
-    coll = _bac_from([mi1])
-    cdef np.uint8_t[:] arr = np.array(flags, dtype=np.uint8)
-    bac_api.set_refined_array(coll, mi1, arr)
-    return {
-        "isref": bac_api.isref(coll, mi1),
-        "get": [bac_api.get(coll, mi1, i2) for i2 in range(len(flags))],
-    }
-
-
-def bac_logicalxor(a, b) -> list:
-    out = bac_api.new()
-    bac_api.logicalxor(_bac_from(a), _bac_from(b), out)
-    return bac_coarse_indices(out)
-
-
-def bac_richcmp(a, b, op) -> int:
-    return bac_api.richcmp(_bac_from(a), _bac_from(b), op)
 
 
 def bac_set_refined_words(i1, words, probes) -> dict:
