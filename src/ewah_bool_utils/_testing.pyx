@@ -127,17 +127,16 @@ cpdef dtype_t[:] make_and_select_from_ewah_index(dtype_t[:] arr,
 def bac_new() -> object:
     return bac_api.new()
 
+
 def bac_count_total() -> int:
     coll = bac_api.new()
     return bac_api.count_total(coll)
 
-def bac_check() -> bool:
-    coll = bac_api.new()
-    return bac_api.check(coll)
 
 def bac_dumps() -> bytes:
     coll = bac_api.new()
     return bac_api.dumps(coll)
+
 
 def bac_dumps_loads() -> bool:
     coll = bac_api.new()
@@ -157,32 +156,8 @@ def bac_coarse_indices(coll) -> list:
     return out[:n].tolist()
 
 
-def bac_set_get(indices) -> list:
-    coll = bac_api.new()
-    for i in indices:
-        bac_api.set(coll, i)
-    return [bac_api.get(coll, i) for i in indices]
-
-
 def bac_set_coarse_count(indices) -> int:
     return bac_api.count_total(_bac_from(indices))
-
-
-def bac_set_refined(i1, i2) -> dict:
-    coll = bac_api.new()
-    bac_api.set(coll, i1, i2)
-    return {
-        "get_coarse": bac_api.get_coarse(coll, i1),
-        "get": bac_api.get(coll, i1, i2),
-        "get_other": bac_api.get(coll, i1, i2 + 1),
-        "isref": bac_api.isref(coll, i1),
-    }
-
-
-def bac_reset(indices) -> int:
-    coll = _bac_from(indices)
-    bac_api.reset(coll)
-    return bac_api.count_total(coll)
 
 
 def bac_dumps_loads_indices(indices) -> list:
@@ -191,38 +166,10 @@ def bac_dumps_loads_indices(indices) -> list:
     return bac_coarse_indices(coll)
 
 
-def bac_append(a, b) -> list:
-    coll = _bac_from(a)
-    bac_api.append(coll, _bac_from(b))
-    return bac_coarse_indices(coll)
-
-
-def bac_intersects(a, b) -> bool:
-    return bac_api.intersects(_bac_from(a), _bac_from(b))
-
-
-def bac_logicaland(a, b) -> list:
-    out = bac_api.new()
-    bac_api.logicaland(_bac_from(a), _bac_from(b), out)
-    return bac_coarse_indices(out)
-
-
 def bac_logicalor(a, b) -> list:
     out = bac_api.new()
     bac_api.logicalor(_bac_from(a), _bac_from(b), out)
     return bac_coarse_indices(out)
-
-
-def bac_select(coarse, refined, mask, n, contaminated) -> list:
-    """Coarse cells plus one refined cell, selected against a coarse mask."""
-    coll = _bac_from(coarse)
-    bac_api.set(coll, refined, 0)
-    cdef np.uint8_t[:] out = np.zeros(n, dtype=np.uint8)
-    if contaminated:
-        bac_api.select_contaminated(coll, _bac_from(mask), out)
-    else:
-        bac_api.select_uncontaminated(coll, _bac_from(mask), out)
-    return np.asarray(out).tolist()
 
 
 def bac_ghost_zone_count(i1, ngz, order1) -> int:
@@ -242,7 +189,7 @@ def bac_set_refined_words(i1, words, probes) -> dict:
     bac_api.set_coarse(coll, i1)
     return {
         "isref": bac_api.isref(coll, i1),
-        "get": [bac_api.get(coll, i1, i2) for i2 in probes],
+        "get": [coll.get(i1, i2) for i2 in probes],
     }
 
 
