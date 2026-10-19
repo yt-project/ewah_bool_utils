@@ -64,10 +64,10 @@ py.extension_module(
     override_options: ['cython_language=cpp'],
 )
 
-py.install_sources(
-    'src/ewah_bool_utils/capi/__init__.py',
+install_data(
+    'src/ewah_bool_utils/capi/__init__.pxd',    
     'src/ewah_bool_utils/capi/bool_array_collection.pxd',
-    subdir: 'ewah_bool_utils/capi',
+    install_dir: py.get_install_dir() / 'ewah_bool_utils/capi',
 )
 
 py.extension_module(
