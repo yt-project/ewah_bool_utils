@@ -65,7 +65,7 @@ py.extension_module(
 )
 
 install_data(
-    'src/ewah_bool_utils/capi/__init__.pxd',    
+    'src/ewah_bool_utils/capi/__init__.pxd',
     'src/ewah_bool_utils/capi/bool_array_collection.pxd',
     install_dir: py.get_install_dir() / 'ewah_bool_utils/capi',
 )
