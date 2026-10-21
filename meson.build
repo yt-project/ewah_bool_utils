@@ -43,6 +43,17 @@ py.extension_module(
 )
 
 py.extension_module(
+    'bool_array_collection',
+    'src/ewah_bool_utils/capi/bool_array_collection.pyx',
+    subdir: 'ewah_bool_utils/capi',
+    install: true,
+    dependencies: [np_dep, ewah_dep],
+    cpp_args: npy_c_args,
+    limited_api: py.language_version(),
+    override_options: ['cython_language=cpp'],
+)
+
+py.extension_module(
     '_testing',
     'src/ewah_bool_utils/_testing.pyx',
     subdir: 'ewah_bool_utils',
@@ -51,6 +62,12 @@ py.extension_module(
     cpp_args: npy_c_args,
     limited_api: py.language_version(),
     override_options: ['cython_language=cpp'],
+)
+
+install_data(
+    'src/ewah_bool_utils/capi/__init__.pxd',
+    'src/ewah_bool_utils/capi/bool_array_collection.pxd',
+    install_dir: py.get_install_dir() / 'ewah_bool_utils/capi',
 )
 
 py.extension_module(
@@ -71,6 +88,7 @@ py.install_sources(
 py.install_sources(
     'tests/__init__.py',
     'tests/test_ewah_bool_utils.py',
+    'tests/test_capi_bool_array_collection.py',
     subdir: 'tests',
 )
 
