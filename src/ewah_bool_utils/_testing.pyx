@@ -198,3 +198,12 @@ def bac_set_refined_words_twice(i1, words):
     cdef np.uint32_t[::1] w = np.array(words, dtype=np.uint32)
     bac_api.set_refined_words(coll, i1, w)
     bac_api.set_refined_words(coll, i1, w)
+
+
+def bac_fill_coarse_indices(indices, nout):
+    # differs from bac_coarse_indices in that you set the size of the output array
+    # separately from the indices so that we can test partial- or over-filled buffers
+    coll = _bac_from(indices)
+    out = np.empty(nout, dtype=np.uint64)
+    n = bac_api.coarse_indices(coll, out)
+    return {'n_filled': n, "out": out.tolist()}

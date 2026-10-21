@@ -5,6 +5,7 @@ from ewah_bool_utils._testing import (
     bac_dumps,
     bac_dumps_loads,
     bac_dumps_loads_indices,
+    bac_fill_coarse_indices,
     bac_ghost_zone_count,
     bac_logicalor,
     bac_new,
@@ -61,6 +62,21 @@ _refined_cell_ids_cases = {
     "no bits": [],
 }
 
+_coarse_index_cases = {
+    "no cells": ([], None, None),
+    "single cell": ([7], None, None),
+    "consecutive cells": (list(range(8)), None, None),
+    "consecutive cells, partial buffer": (list(range(8)), 20, None),
+    "sparse, far apart": ([3, 17, 1000, 10**6], None, None),
+    "duplicates": (
+        [5, 5, 5],
+        None,
+        [
+            5,
+        ],
+    ),
+}
+
 
 # minimal tests on populated collections
 class TestPopulatedBoolArrayCollections:
@@ -97,3 +113,31 @@ class TestPopulatedBoolArrayCollections:
         }
         with pytest.raises(ValueError):
             bac_set_refined_words_twice(coarse_index, refined_words)
+
+    @pytest.mark.parametrize(
+        "indices,n_out,expected_indices",
+        _coarse_index_cases.values(),
+        ids=_coarse_index_cases.keys(),
+    )
+    def test_coarse_indices(self, indices, n_out, expected_indices):
+
+        if n_out is None:
+            n_out = len(indices)
+        result = bac_fill_coarse_indices(indices, n_out)
+
+        if expected_indices is None:
+            # output should match input
+            expected_indices = indices
+
+        n = result["n_filled"]
+        assert n == len(expected_indices), (
+            f"n_filled={n}, len(expected)={len(expected_indices)}, len(indices)={len(indices)}"
+        )
+
+        assert result["out"][:n] == expected_indices
+        assert len(result["out"]) == n_out
+
+    def test_overfilled_coarse_indices(self):
+        indices = range(8)
+        with pytest.raises(IndexError, match="output buffer too small"):
+            bac_fill_coarse_indices(indices, len(indices) - 1)
