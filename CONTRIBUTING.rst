@@ -58,4 +58,3 @@ Instructions here rely on `uv <https://docs.astral.sh/uv/>`_ and we highly recom
     $ git push origin name-of-your-bugfix-or-feature
 
 10. Submit a pull request through the GitHub website.
-
