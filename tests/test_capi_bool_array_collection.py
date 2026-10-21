@@ -6,6 +6,7 @@ from ewah_bool_utils._testing import (
     bac_dumps_loads,
     bac_dumps_loads_indices,
     bac_fill_coarse_indices,
+    bac_get_coarse,
     bac_ghost_zone_count,
     bac_logicalor,
     bac_new,
@@ -141,3 +142,13 @@ class TestPopulatedBoolArrayCollections:
         indices = range(8)
         with pytest.raises(IndexError, match="output buffer too small"):
             bac_fill_coarse_indices(indices, len(indices) - 1)
+
+    def test_get_coarse(self):
+        # check that when you build a BAC from a set of indices, those
+        # indices get set and are not defined as refined sub-cells.
+        indices = [3, 17, 40]
+        probes = range(64)
+        assert bac_get_coarse(indices, probes) == {
+            "get_coarse": [i in indices for i in probes],
+            "isref": [False] * len(probes),
+        }

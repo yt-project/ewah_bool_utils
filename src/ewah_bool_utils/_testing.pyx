@@ -207,3 +207,13 @@ def bac_fill_coarse_indices(indices, nout):
     out = np.empty(nout, dtype=np.uint64)
     n = bac_api.coarse_indices(coll, out)
     return {'n_filled': n, "out": out.tolist()}
+
+def bac_get_coarse(indices, probes) -> dict:
+    # builds a collection from a set of indices then returns whether
+    # the list of indices in the probes are set and whether they have
+    # refined subcells
+    coll = _bac_from(indices)
+    return {
+        "get_coarse": [bac_api.get_coarse(coll, i) for i in probes],
+        "isref": [bac_api.isref(coll, i) for i in probes],
+    }
